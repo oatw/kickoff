@@ -1,0 +1,249 @@
+<!doctype html> <html class=bc-primary lang=zh-cmn-Hans> <head> <meta charset=UTF-8> <title>Kickoff - 可能是东北三省最灵活易用的任务管理组件</title> <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"> <meta name=renderer content=webkit> <meta http-equiv=X-UA-Compatible content="IE=Edge,chrome=1"> <meta name=apple-mobile-web-app-capable content=yes> <meta name=apple-mobile-web-app-status-bar-style content=black-translucent> <meta name=apple-mobile-web-app-title content=kickoff> <meta name=mobile-web-app-capable content=kickoff> <meta name=application-name content=kickoff> <meta content="telephone=no" name=format-detection> <meta name=msapplication-tap-highlight content=no> <meta name=author content=""> <meta name=keywords content=kickoff> <meta name=description content=kickoff> <link rel="shortcut icon" href="/kickoff/favicon.ico"> <script src="https://unpkg.com/turbolinks@5.2.0/dist/turbolinks.js"></script> <script src="/kickoff/assets/javascripts/browser_detect-145b9f2f.js" data-turbolinks-track=reload></script> <script src="https://unpkg.com/luda@0.3.3/dist/js/luda-degradation.min.js" data-turbolinks-track=reload></script> <link href="https://unpkg.com/luda@0.3.3/dist/css/luda-default.min.css" rel=stylesheet data-turbolinks-track=reload> <link href="/kickoff/assets/stylesheets/kickoff/kickoff.min-ddd98cfa.css" rel=stylesheet data-turbolinks-track=reload /> <link href="/kickoff/assets/stylesheets/site-0cffdc65.css" rel=stylesheet data-turbolinks-track=reload /> <script src="https://unpkg.com/luda@0.3.3/dist/js/luda.min.js" data-turbolinks-track=reload></script> <script src="/kickoff/assets/javascripts/kickoff/kickoff.min-1c26c330.js" data-turbolinks-track=reload></script> <script src="/kickoff/assets/javascripts/site-e8cfef04.js" data-turbolinks-track=reload></script> </head> <body class="d-flex fd-column jc-between b-primary"> <header class="hollow-header sti-t zi-highest d-flex jc-between ai-center py-small px-large"> <a href="/kickoff/" class="hollow-header-logo py-tiny" data-turbolinks=false> <img src="/kickoff/assets/images/logo-ec45e657.svg" alt=logo class=d-block width=757 height=187 /> </a> <nav class="d-flex p7"> <a href="/kickoff/docs/general/" class="link-light px-small td-none">文档</a> <a href="https://codepen.io/collection/DgqZqO" class="link-light px-small td-none">示例</a> <a href="https://github.com/oatw/kickoff/blob/master/CHANGELOG.md" class="link-light px-small td-none">变更日志</a> <a href="https://github.com/oatw/kickoff" class="link-light px-small td-none">源码仓库</a> <a href="https://github.com/oatw/kickoff/raw/v0.2.4/release/kickoff-0.2.4.zip" class="btn btn-hollow-light btn-small px-small circle ml-small o-main">下载 v0.2.4</a> <a href="/kickoff/docs/general/" class="btn btn-light btn-small px-small c-primary circle ml-medium o-main">开始使用</a> </nav> </header> <main id=main class="rel zi-high"> <div id=doc class="d-flex jc-between min-h-100vh bc-light"> <aside id=doc-aside class="flex-ungrowable flex-unshrinkable"> <nav id=doc-nav class="of-auto p-large"> <div class=mb-small> <h2 class="h6 mb-small">开始</h2> <a href="/kickoff/docs/general/" class="p8 p-none td-none ">简介</a> <a href="/kickoff/docs/installation/" class="p8 p-none td-none ">安装</a> <a href="/kickoff/docs/browser_support/" class="p8 p-none td-none ">兼容性</a> </div> <div class=mb-small> <h2 class="h6 mb-small">教程</h2> <a href="/kickoff/docs/tutorial_introduction/" class="p8 p-none td-none ">入门</a> <a href="/kickoff/docs/tutorial_config/" class="p8 p-none td-none ">配置</a> <a href="/kickoff/docs/tutorial_event/" class="p8 p-none td-none ">事件</a> <a href="/kickoff/docs/tutorial_theming/" class="p8 p-none td-none ">主题</a> <a href="/kickoff/docs/tutorial_special_date/" class="p8 p-none td-none ">特殊日期</a> <a href="/kickoff/docs/tutorial_flag/" class="p8 p-none td-none ">时间线旗标</a> <a href="/kickoff/docs/tutorial_action_readonly/" class="p8 p-none td-none ">任务动作与只读属性</a> <a href="/kickoff/docs/tutorial_custom_action/" class="p8 p-none td-none ">自定义动作</a> <a href="/kickoff/docs/tutorial_custom_prop/" class="p8 p-none td-none ">自定义属性</a> <a href="/kickoff/docs/tutorial_validate/" class="p8 p-none td-none ">模型校验</a> <a href="/kickoff/docs/tutorial_render/" class="p8 p-none td-none ">自定义渲染</a> <a href="/kickoff/docs/tutorial_form/" class="p8 p-none td-none ">表单渲染</a> <a href="/kickoff/docs/tutorial_locale/" class="p8 p-none td-none ">多语言</a> </div> <div class=mb-small> <h2 class="h6 mb-small">API</h2> <a href="/kickoff/docs/api_kickoff/" class="p8 p-none td-none ">Kickoff</a> <a href="/kickoff/docs/api_task/" class="p8 p-none td-none ">Task</a> <a href="/kickoff/docs/api_time/" class="p8 p-none td-none doc-nav-current-link">Time</a> <a href="/kickoff/docs/api_timeline/" class="p8 p-none td-none ">Timeline</a> </div> </nav> </aside> <article id=doc-article class="article w-100 px-large pb-large"> <h1>API - Time</h1> <h2>数据结构</h2> <div class=highlight><pre class="code plaintext"><code>@typedef {Object} TimeInstance - 时间模型实例
+@prop {integer} [year = 当前系统年]
+@prop {integer} [month = 实例化传入year则为1否则为当前系统月 + 1]
+@prop {integer} [day = 实例化传入year则为1否则为当前系统日]
+@prop {integer} [hours = 实例化传入year则为0否则为当前系统小时]
+@prop {integer} [minutes = 实例化传入year则为0否则为当前系统分钟]
+@prop {integer} [seconds = 实例化传入year则为0否则为当前系统秒]
+</code></pre></div> <div class=highlight><pre class="code plaintext"><code>@typedef {TimeRange} - 时间周期对象
+@prop {TimeInstance} beginning - 开始时间实例
+@prop {TimeInstance} end - 结束时间实例
+</code></pre></div> <div class=highlight><pre class="code plaintext"><code>@typedef {TimeDuration} - 周期持续时间对象
+@prop {integer} seconds
+@prop {number} days
+@prop {number} weeks
+@prop {number} months
+@prop {number} years
+</code></pre></div> <h2>构造函数</h2> <h3>kickoff.time (year, month, day, hours, minutes, seconds)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer | string | Date | TimeInstance} [year = 当前系统年] - 可传入年份四位
+数字或yyyy-mm-dd HH:MM:SS格式字符串或Date对象或TimeInstance
+@param {integer} [month = 传入year则为1否则为当前系统月 + 1]
+@param {integer} [day = 传入year则为1否则为当前系统日]
+@param {integer} [hours = 传入year则为0否则为当前系统小时]
+@param {integer} [minutes = 传入year则为0否则为当前系统分钟]
+@param {integer} [seconds = 传入year则为0否则为当前系统秒]
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 创建当前系统时间构建的TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">()</span>
+<span class="c1">// @example 传入时间字符串构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-01</span><span class="dl">'</span><span class="p">)</span>
+<span class="c1">// @example 传入时间数字构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1">// @example 将Date对象转化为TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div> <h2>静态方法</h2> <h3>.devideByDay (beginning, end)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以天为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间</span>
+<span class="c1">// 构建成TimeRange数组</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">.</span><span class="nx">devideByDay</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-01</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">2020-10-31</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.devideByHour (beginning, end)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以小时为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间</span>
+<span class="c1">// 构建成TimeRange数组</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">.</span><span class="nx">devideByHour</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-01</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">2020-10-31</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.devideByMonth (beginning, end)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以月为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间</span>
+<span class="c1">// 构建成TimeRange数组</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">.</span><span class="nx">devideByMonth</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-01</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">2020-10</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.devideByYear (beginning, end)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以年为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间</span>
+<span class="c1">// 构建成TimeRange数组</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">.</span><span class="nx">devideByYear</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">2030</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.devideByWeek (beginning, end)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以周为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间</span>
+<span class="c1">// 构建成TimeRange数组</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">.</span><span class="nx">devideByDay</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-01</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">2020-10-31</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.earlist (time1, time2, …)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} time1, time2[, ...] - 需要比较的时间。如传入类
+型为string，格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 查找一系列时间中的最早时间</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">.</span><span class="nx">earlist</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-01</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">2020-09-01</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.latest (time1, time2, …)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} time1, time2[, ...] - 需要比较的时间。如传入类
+型为string，格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 查找一系列时间中的最晚时间</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">.</span><span class="nx">latest</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-01</span><span class="dl">'</span><span class="p">,</span> <span class="dl">'</span><span class="s1">2020-09-01</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h2>实例方法</h2> <h3>.beginningOfTheDay ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统天开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">beginningOfTheDay</span><span class="p">()</span>
+</code></pre></div> <h3>.beginningOfTheHour ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统小时开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">beginningOfTheHour</span><span class="p">()</span>
+</code></pre></div> <h3>.beginningOfTheMonth ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统月开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">beginningOfTheMonth</span><span class="p">()</span>
+</code></pre></div> <h3>.beginningOfTheYear ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统年开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">beginningOfTheYear</span><span class="p">()</span>
+</code></pre></div> <h3>.beginningOfTheWeek ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统周开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">beginningOfTheWeek</span><span class="p">()</span>
+</code></pre></div> <h3>.calcDay (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前天之后一天的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">calcDay</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div> <h3>.calcHours (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前小时之后一小时的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">calcHours</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div> <h3>.calcMinutes (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前分周之后一分钟的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">calcMinutes</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div> <h3>.calcMonth (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前月之后一个月的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">calcMonth</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div> <h3>.calcSeconds (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前时间之后10秒构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">calcSeconds</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div> <h3>.calcWeeks (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前时间向后推移一周的那一天的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">calcWeeks</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div> <h3>.calcYear (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前年之后一年的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">calcYear</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div> <h3>.earlierThan (time)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {boolean}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 比较前者是否早于后者</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-01</span><span class="dl">'</span><span class="p">).</span><span class="nx">earlierThan</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-11</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.endOfTheDay ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统天结束时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">endOfTheDay</span><span class="p">()</span>
+</code></pre></div> <h3>.endOfTheHour ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统小时结束时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">endOfTheHour</span><span class="p">()</span>
+</code></pre></div> <h3>.endOfTheMonth ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统月结束时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">endOfTheMonth</span><span class="p">()</span>
+</code></pre></div> <h3>.endOfTheYear ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统年结束时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">endOfTheYear</span><span class="p">()</span>
+</code></pre></div> <h3>.endOfTheWeek ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 以当前系统周结束时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">endOfTheWeek</span><span class="p">()</span>
+</code></pre></div> <h3>.equals (time)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {boolean}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 比较两个时间是否相同</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-01</span><span class="dl">'</span><span class="p">).</span><span class="nx">equals</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(</span><span class="mi">2020</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</code></pre></div> <h3>.isLeapYear ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {boolean}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 检查当前年是否为润年</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">isLeapYear</span><span class="p">()</span>
+</code></pre></div> <h3>.isWeekday ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {boolean}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 检查当前天是否为周一到周五范围内的一天</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">isWeekday</span><span class="p">()</span>
+</code></pre></div> <h3>.isWeekend ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {boolean}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 检查当前天是否为周六或周日</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">isWeekend</span><span class="p">()</span>
+</code></pre></div> <h3>.laterThan (time)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {boolean}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 比较前者是否晚于后者</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-01</span><span class="dl">'</span><span class="p">).</span><span class="nx">laterThan</span><span class="p">(</span><span class="dl">'</span><span class="s1">2020-10-11</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.lastDayOfTheMonth ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {integer}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 查找本月最后一天日（也可理解为本月一共多少天）</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">lastDayOfTheMonth</span><span class="p">()</span>
+</code></pre></div> <h3>.nextDay (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前天之后一天的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">nextDay</span><span class="p">()</span>
+</code></pre></div> <h3>.nextHours (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前小时之后一小时的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">nextHours</span><span class="p">()</span>
+</code></pre></div> <h3>.nextMinutes (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前分钟之后一分钟的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">nextMinutes</span><span class="p">()</span>
+</code></pre></div> <h3>.nextMonth (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前月之后一月的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">nextMonth</span><span class="p">()</span>
+</code></pre></div> <h3>.nextSeconds (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前时间后10秒时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">nextSeconds</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div> <h3>.nextWeeks (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前时间向后推移一周的那一天的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">nextWeeks</span><span class="p">()</span>
+</code></pre></div> <h3>.nextYear (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前年之后一年的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">nextYear</span><span class="p">()</span>
+</code></pre></div> <h3>.prevDay (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前天之前一天的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">prevDay</span><span class="p">()</span>
+</code></pre></div> <h3>.prevHours (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前小时之前一小时的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">prevHours</span><span class="p">()</span>
+</code></pre></div> <h3>.prevMinutes (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前分钟之前一分钟的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">prevMinutes</span><span class="p">()</span>
+</code></pre></div> <h3>.prevMonth (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前月之前一月的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">prevMonth</span><span class="p">()</span>
+</code></pre></div> <h3>.prevSeconds (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前时间前10秒时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">prevSeconds</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div> <h3>.prevWeeks (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前时间向前推移一周的那一天的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">prevWeeks</span><span class="p">()</span>
+</code></pre></div> <h3>.prevYear (count)</h3> <div class=highlight><pre class="code plaintext"><code>@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 使用当前年之前一年的开始时间构建TimeInstance</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">prevYear</span><span class="p">()</span>
+</code></pre></div> <h3>.since (time)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeDuration}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 获取当前时间距离1990年1月1日的时间长度</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">since</span><span class="p">(</span><span class="dl">'</span><span class="s1">1990-01-01</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.to (time)</h3> <div class=highlight><pre class="code plaintext"><code>@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeDuration}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 获取当前时间到2990年1月1日的时间长度</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">to</span><span class="p">(</span><span class="dl">'</span><span class="s1">2990-01-01</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.toStamp ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {integer}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 获取当前时间时间戳</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">toStamp</span><span class="p">()</span>
+</code></pre></div> <h3>.toString (format)</h3> <div class=highlight><pre class="code plaintext"><code>@param {string} [format = {yyyy}-{mm}-{dd} {HH}:{MM}:{SS}] 格式化时间字符串模板
+@returns {string}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 获取当前时间字符串</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">toString</span><span class="p">()</span>
+<span class="c1">// @example 以自定义格式获取当前时间字符串</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">toString</span><span class="p">(</span><span class="dl">'</span><span class="s1">{yyyy}/{mm}/{dd}</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div> <h3>.weekOfTheYear ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {integer}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 查找当前周是今天的第几周</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">weekOfTheYear</span><span class="p">()</span>
+</code></pre></div> <h3>.whatDay ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {integer}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 获取今天是星期几</span>
+<span class="nx">kickoff</span><span class="p">.</span><span class="nx">time</span><span class="p">().</span><span class="nx">whatDay</span><span class="p">()</span>
+</code></pre></div> </article> </div> </main> <footer class="rel zi-high px-large py-medium d-flex jc-between"> <p class="p7 mr-small c-light"> <span class=o-muted>Designed and built by</span> <a href="https://github.com/oatw" class="link-light fw-semibold">Oatw</a>, <span class=o-muted>Code licensed</span> <a href="https://github.com/oatw/kickoff/blob/master/LICENSE" class="link-light fw-semibold">MIT</a>. </p> <p class="p7 c-light"> <a href="https://github.com/oatw/kickoff/blob/master/CONTRIBUTING.md" class="link-light px-tiny td-none">Contributing</a> <span class=o-main>|</span> <a href="https://github.com/oatw/kickoff/issues/new?assignees=oatw&amp;labels=enhancement&amp;template=FEATURE_REQUEST.md" class="link-light px-tiny td-none">Feature Request</a> <span class=o-main>|</span> <a href="https://github.com/oatw/kickoff/issues/new?assignees=oatw&amp;labels=bug&amp;template=BUG_REPORT.md" class="link-light px-tiny td-none">Bug Report</a> </p> </footer> </body> </html>
