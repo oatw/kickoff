@@ -1,0 +1,682 @@
+# API - Time
+
+## 数据结构
+
+```plaintext
+@typedef {Object} TimeInstance - 时间模型实例
+@prop {integer} [year = 当前系统年]
+@prop {integer} [month = 实例化传入year则为1否则为当前系统月 + 1]
+@prop {integer} [day = 实例化传入year则为1否则为当前系统日]
+@prop {integer} [hours = 实例化传入year则为0否则为当前系统小时]
+@prop {integer} [minutes = 实例化传入year则为0否则为当前系统分钟]
+@prop {integer} [seconds = 实例化传入year则为0否则为当前系统秒]
+```
+
+```plaintext
+@typedef {TimeRange} - 时间周期对象
+@prop {TimeInstance} beginning - 开始时间实例
+@prop {TimeInstance} end - 结束时间实例
+```
+
+```plaintext
+@typedef {TimeDuration} - 周期持续时间对象
+@prop {integer} seconds
+@prop {number} days
+@prop {number} weeks
+@prop {number} months
+@prop {number} years
+```
+
+## 构造函数
+
+### kickoff.time (year, month, day, hours, minutes, seconds)
+
+```plaintext
+@param {integer | string | Date | TimeInstance} [year = 当前系统年] - 可传入年份四位
+数字或yyyy-mm-dd HH:MM:SS格式字符串或Date对象或TimeInstance
+@param {integer} [month = 传入year则为1否则为当前系统月 + 1]
+@param {integer} [day = 传入year则为1否则为当前系统日]
+@param {integer} [hours = 传入year则为0否则为当前系统小时]
+@param {integer} [minutes = 传入year则为0否则为当前系统分钟]
+@param {integer} [seconds = 传入year则为0否则为当前系统秒]
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 创建当前系统时间构建的TimeInstance
+kickoff.time()
+// @example 传入时间字符串构建TimeInstance
+kickoff.time('2020-10-01')
+// @example 传入时间数字构建TimeInstance
+kickoff.time(2020, 10, 1)
+// @example 将Date对象转化为TimeInstance
+kickoff.time(new Date(2020, 9, 1))
+```
+
+## 静态方法
+
+### .devideByDay (beginning, end)
+
+```plaintext
+@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+```
+
+```javascript
+// @example 以天为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间
+// 构建成TimeRange数组
+kickoff.time.devideByDay('2020-10-01', '2020-10-31')
+```
+
+### .devideByHour (beginning, end)
+
+```plaintext
+@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+```
+
+```javascript
+// @example 以小时为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间
+// 构建成TimeRange数组
+kickoff.time.devideByHour('2020-10-01', '2020-10-31')
+```
+
+### .devideByMonth (beginning, end)
+
+```plaintext
+@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+```
+
+```javascript
+// @example 以月为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间
+// 构建成TimeRange数组
+kickoff.time.devideByMonth('2020-01', '2020-10')
+```
+
+### .devideByYear (beginning, end)
+
+```plaintext
+@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+```
+
+```javascript
+// @example 以年为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间
+// 构建成TimeRange数组
+kickoff.time.devideByYear('2020', '2030')
+```
+
+### .devideByWeek (beginning, end)
+
+```plaintext
+@param {TimeInstance | string | Date} beginning - 开始时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | string | Date} beginning - 结束时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeRange[]}
+```
+
+```javascript
+// @example 以周为粒度将从开始时间到结束时间范围的时间进行拆分，并以每个拆分单元的开始和结束时间
+// 构建成TimeRange数组
+kickoff.time.devideByDay('2020-10-01', '2020-10-31')
+```
+
+### .earlist (time1, time2, ...)
+
+```plaintext
+@param {TimeInstance | string | Date} time1, time2[, ...] - 需要比较的时间。如传入类
+型为string，格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 查找一系列时间中的最早时间
+kickoff.time.earlist('2020-10-01', '2020-09-01')
+```
+
+### .latest (time1, time2, ...)
+
+```plaintext
+@param {TimeInstance | string | Date} time1, time2[, ...] - 需要比较的时间。如传入类
+型为string，格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 查找一系列时间中的最晚时间
+kickoff.time.latest('2020-10-01', '2020-09-01')
+```
+
+## 实例方法
+
+### .beginningOfTheDay ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统天开始时间构建TimeInstance
+kickoff.time().beginningOfTheDay()
+```
+
+### .beginningOfTheHour ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统小时开始时间构建TimeInstance
+kickoff.time().beginningOfTheHour()
+```
+
+### .beginningOfTheMonth ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统月开始时间构建TimeInstance
+kickoff.time().beginningOfTheMonth()
+```
+
+### .beginningOfTheYear ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统年开始时间构建TimeInstance
+kickoff.time().beginningOfTheYear()
+```
+
+### .beginningOfTheWeek ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统周开始时间构建TimeInstance
+kickoff.time().beginningOfTheWeek()
+```
+
+### .calcDay (count)
+
+```plaintext
+@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前天之后一天的开始时间构建TimeInstance
+kickoff.time().calcDay(1)
+```
+
+### .calcHours (count)
+
+```plaintext
+@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前小时之后一小时的开始时间构建TimeInstance
+kickoff.time().calcHours(1)
+```
+
+### .calcMinutes (count)
+
+```plaintext
+@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前分周之后一分钟的开始时间构建TimeInstance
+kickoff.time().calcMinutes(1)
+```
+
+### .calcMonth (count)
+
+```plaintext
+@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前月之后一个月的开始时间构建TimeInstance
+kickoff.time().calcMonth(1)
+```
+
+### .calcSeconds (count)
+
+```plaintext
+@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前时间之后10秒构建TimeInstance
+kickoff.time().calcSeconds(10)
+```
+
+### .calcWeeks (count)
+
+```plaintext
+@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前时间向后推移一周的那一天的开始时间构建TimeInstance
+kickoff.time().calcWeeks(1)
+```
+
+### .calcYear (count)
+
+```plaintext
+@param {integer} count - 向前或向后推算跨越的单位长度，正值代表向后，负值代表向前
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前年之后一年的开始时间构建TimeInstance
+kickoff.time().calcYear(1)
+```
+
+### .earlierThan (time)
+
+```plaintext
+@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {boolean}
+```
+
+```javascript
+// @example 比较前者是否早于后者
+kickoff.time('2020-10-01').earlierThan('2020-10-11')
+```
+
+### .endOfTheDay ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统天结束时间构建TimeInstance
+kickoff.time().endOfTheDay()
+```
+
+### .endOfTheHour ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统小时结束时间构建TimeInstance
+kickoff.time().endOfTheHour()
+```
+
+### .endOfTheMonth ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统月结束时间构建TimeInstance
+kickoff.time().endOfTheMonth()
+```
+
+### .endOfTheYear ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统年结束时间构建TimeInstance
+kickoff.time().endOfTheYear()
+```
+
+### .endOfTheWeek ( )
+
+```plaintext
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 以当前系统周结束时间构建TimeInstance
+kickoff.time().endOfTheWeek()
+```
+
+### .equals (time)
+
+```plaintext
+@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {boolean}
+```
+
+```javascript
+// @example 比较两个时间是否相同
+kickoff.time('2020-10-01').equals(new Date(2020, 9, 1))
+```
+
+### .isLeapYear ( )
+
+```plaintext
+@returns {boolean}
+```
+
+```javascript
+// @example 检查当前年是否为润年
+kickoff.time().isLeapYear()
+```
+
+### .isWeekday ( )
+
+```plaintext
+@returns {boolean}
+```
+
+```javascript
+// @example 检查当前天是否为周一到周五范围内的一天
+kickoff.time().isWeekday()
+```
+
+### .isWeekend ( )
+
+```plaintext
+@returns {boolean}
+```
+
+```javascript
+// @example 检查当前天是否为周六或周日
+kickoff.time().isWeekend()
+```
+
+### .laterThan (time)
+
+```plaintext
+@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {boolean}
+```
+
+```javascript
+// @example 比较前者是否晚于后者
+kickoff.time('2020-10-01').laterThan('2020-10-11')
+```
+
+### .lastDayOfTheMonth ( )
+
+```plaintext
+@returns {integer}
+```
+
+```javascript
+// @example 查找本月最后一天日（也可理解为本月一共多少天）
+kickoff.time().lastDayOfTheMonth()
+```
+
+### .nextDay (count)
+
+```plaintext
+@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前天之后一天的开始时间构建TimeInstance
+kickoff.time().nextDay()
+```
+
+### .nextHours (count)
+
+```plaintext
+@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前小时之后一小时的开始时间构建TimeInstance
+kickoff.time().nextHours()
+```
+
+### .nextMinutes (count)
+
+```plaintext
+@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前分钟之后一分钟的开始时间构建TimeInstance
+kickoff.time().nextMinutes()
+```
+
+### .nextMonth (count)
+
+```plaintext
+@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前月之后一月的开始时间构建TimeInstance
+kickoff.time().nextMonth()
+```
+
+### .nextSeconds (count)
+
+```plaintext
+@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前时间后10秒时间构建TimeInstance
+kickoff.time().nextSeconds(10)
+```
+
+### .nextWeeks (count)
+
+```plaintext
+@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前时间向后推移一周的那一天的开始时间构建TimeInstance
+kickoff.time().nextWeeks()
+```
+
+### .nextYear (count)
+
+```plaintext
+@param {integer} [count = 1] - 向后推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前年之后一年的开始时间构建TimeInstance
+kickoff.time().nextYear()
+```
+
+### .prevDay (count)
+
+```plaintext
+@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前天之前一天的开始时间构建TimeInstance
+kickoff.time().prevDay()
+```
+
+### .prevHours (count)
+
+```plaintext
+@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前小时之前一小时的开始时间构建TimeInstance
+kickoff.time().prevHours()
+```
+
+### .prevMinutes (count)
+
+```plaintext
+@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前分钟之前一分钟的开始时间构建TimeInstance
+kickoff.time().prevMinutes()
+```
+
+### .prevMonth (count)
+
+```plaintext
+@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前月之前一月的开始时间构建TimeInstance
+kickoff.time().prevMonth()
+```
+
+### .prevSeconds (count)
+
+```plaintext
+@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前时间前10秒时间构建TimeInstance
+kickoff.time().prevSeconds(10)
+```
+
+### .prevWeeks (count)
+
+```plaintext
+@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前时间向前推移一周的那一天的开始时间构建TimeInstance
+kickoff.time().prevWeeks()
+```
+
+### .prevYear (count)
+
+```plaintext
+@param {integer} [count = 1] - 向前推算跨越的单位长度
+@returns {TimeInstance}
+```
+
+```javascript
+// @example 使用当前年之前一年的开始时间构建TimeInstance
+kickoff.time().prevYear()
+```
+
+### .since (time)
+
+```plaintext
+@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeDuration}
+```
+
+```javascript
+// @example 获取当前时间距离1990年1月1日的时间长度
+kickoff.time().since('1990-01-01')
+```
+
+### .to (time)
+
+```plaintext
+@param {TimeInstance | string | Date} time - 需要比较的时间。如传入类型为string，
+格式须为 yyyy-mm-dd HH:MM:SS
+@returns {TimeDuration}
+```
+
+```javascript
+// @example 获取当前时间到2990年1月1日的时间长度
+kickoff.time().to('2990-01-01')
+```
+
+### .toStamp ( )
+
+```plaintext
+@returns {integer}
+```
+
+```javascript
+// @example 获取当前时间时间戳
+kickoff.time().toStamp()
+```
+
+### .toString (format)
+
+```plaintext
+@param {string} [format = {yyyy}-{mm}-{dd} {HH}:{MM}:{SS}] 格式化时间字符串模板
+@returns {string}
+```
+
+```javascript
+// @example 获取当前时间字符串
+kickoff.time().toString()
+// @example 以自定义格式获取当前时间字符串
+kickoff.time().toString('{yyyy}/{mm}/{dd}')
+```
+
+### .weekOfTheYear ( )
+
+```plaintext
+@returns {integer}
+```
+
+```javascript
+// @example 查找当前周是今天的第几周
+kickoff.time().weekOfTheYear()
+```
+
+### .whatDay ( )
+
+```plaintext
+@returns {integer}
+```
+
+```javascript
+// @example 获取今天是星期几
+kickoff.time().whatDay()
+```

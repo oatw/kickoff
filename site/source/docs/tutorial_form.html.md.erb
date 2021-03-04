@@ -1,0 +1,29 @@
+<!-- markdownlint-disable -->
+# 表单渲染
+
+Kickoff从0.2.0版本开始，新增了内置任务表单，可以通过简单的配置方式，
+实现内置属性和自定义属性的表单项渲染。同时，也支持开发者自行渲染任务表单中的某个输入项甚至整个表单。
+
+对于内置表单而言，目前支持的输入项类型有`text`、`number`、`textarea`、`select`、`time`。
+对于出现在表单配置中不支持的类型，默认会使用`text`类型进行渲染。
+
+内置表单还支持表单组嵌套渲染，可以方便地把含义相近的表单项目组合到一起，便于用户区分。
+
+## 开始实践
+
+下面，我们通过一个例子来了解一下，如何对任务模型的表单进行配置。
+我们使用setTimeout模拟了异步获取一个`select`型输入项的`options`数据，
+还用自定义渲染函数渲染了一个非内置的输入项。
+由于代码内容较多，不在此赘述，请通过点击任务编辑按键编辑表单项并阅读代码进行学习。
+
+<iframe height="530" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Rendering Forms" src="https://codepen.io/Kickoff/embed/dypdoga?height=530&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/dypdoga'>Kickoff Tutorial - Rendering Forms</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+Kickoff的内置表单会对任务模型数据变化自动进行响应，
+但对于自定义渲染的表单项或表单，需要开发者自行处理响应关系。
+另外，对于模型间的关联关系，内置表单也会自动处理，如使用自定义渲染函数，
+这些关联关系也需要开发者自行处理，如前置任务和后置任务输入项`options`在任务发生变化时的自动更新。
+
+更多关于表单配置的内容请查看 <%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API。

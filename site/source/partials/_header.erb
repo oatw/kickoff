@@ -1,0 +1,13 @@
+<header class="hollow-header sti-t zi-highest d-flex jc-between ai-center py-small px-large">
+  <% link_to '/index.html', class: 'hollow-header-logo py-tiny', data: {turbolinks: false} do %>
+    <%= image_tag 'logo.svg', alt: 'logo', class: 'd-block' %>
+  <% end %>
+  <nav class="d-flex p7">
+    <%= link_to '文档', find_route_uri('general'), class: 'link-light px-small td-none' %>
+    <%= link_to '示例', data.kickoff.demos, class: 'link-light px-small td-none' %>
+    <%= link_to '变更日志', data.kickoff.changelog, class: 'link-light px-small td-none' %>
+    <%= link_to '源码仓库', data.kickoff.repo, class: 'link-light px-small td-none' %>
+    <%= link_to "下载 v#{data.kickoff.version}", download_uri('zip'), class: 'btn btn-hollow-light btn-small px-small circle ml-small o-main' %>
+    <%= link_to '开始使用', find_route_uri('general'), class: 'btn btn-light btn-small px-small c-primary circle ml-medium o-main' %>
+  </nav>
+</header>

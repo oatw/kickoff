@@ -1,0 +1,33 @@
+.kickoff-modal
+  display: none
+  position: absolute
+  top: 0
+  right: 0
+  bottom: 0
+  left: 0
+  z-index: 3
+  overflow: auto
+  background: $kickoff-modal-background
+
+.kickoff-modal.kickoff-modal-active
+  display: block
+
+.kickoff-modal-body
+  position: relative
+  max-width: $kickoff-modal-body-max-width
+  min-height: $kickoff-modal-body-min-height
+  padding: $kickoff-modal-body-padding
+  margin: $kickoff-modal-body-margin
+  background: $kickoff-modal-body-background
+  border-radius: $kickoff-border-radius
+  box-shadow: $kickoff-modal-body-box-shadow
+
+.kickoff-modal-body .kickoff-button-close-modal
+  position: absolute
+  top: - $kickoff-button-close-modal-size / 2
+  right: - $kickoff-button-close-modal-size / 2
+  width: $kickoff-button-close-modal-size
+  height: $kickoff-button-close-modal-size
+  color: $kickoff-button-close-modal-color
+  background: $kickoff-button-close-modal-background
+  border-radius: 100%

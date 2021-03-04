@@ -1,0 +1,26 @@
+<!-- markdownlint-disable -->
+# 特殊日期
+
+## 特殊日期分类
+
+特殊日期分两类，一类是计算为任务工期的节假日，另一类是不计算为任务工期的工作日。
+Kickoff中默认的节假日是周六、日，工作日是周一到周五。
+
+如果需要添加自定义的节假日，可以通过配置Kickoff的exclusions选项来指定需要从工期中排除的起始周期，
+同理，如果需要把周六、日设定为工作日，可以通过配置Kickoff的inclusions选项来指定需要计算到工期内的周期。
+这两个字段的数据结构都是Array型，因此可以配置多个周期范围。
+数组中的每个对象应具备beginning和end两个字段用来指定周期的开始和结束时间。
+
+## 开始实践
+
+在下面的例子中，我们分别设定了一个inclusions周期和一个exclusions周期，
+我们可以在鼠标悬停在Second Task时看到，其popover面板内显示的任务周期已经根据特殊日期的配置进行了计算。
+
+<iframe height="460" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Setting Special Dates" src="https://codepen.io/Kickoff/embed/gOwvYQO?height=460&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/gOwvYQO'>Kickoff Tutorial - Setting Special Dates</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+更多内容请参考 <%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API、
+<%= link_to 'Task', find_route_uri('api_task') %> API
+中关于数据结构部分的说明。

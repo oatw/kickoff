@@ -1,0 +1,44 @@
+<!-- markdownlint-disable -->
+# 事件
+
+## 工作原理
+
+Kickoff的事件系统支持添加监听函数来对数据模型的各种操作进行动态的、同步的干预，
+提供了灵活的定制化支持。目前提供事件支持的模型有
+<%= link_to 'Task', find_route_uri('api_task') %> API
+和 <%= link_to 'Timeline', find_route_uri('api_timeline') %> API。
+
+## 开始实践
+
+下面我们来通过一个例子来了解 <%= link_to 'Task', find_route_uri('api_task') %> 模型的事件系统。
+
+任务模型的事件符合冒泡机制，因此，我们只需要在根任务实例上监听，就可以捕获到所有后代任务的事件。
+我们通过 `on` 方法监听内置事件 `after-create` 来执行自定义逻辑。
+为了演示如何触发自定义事件，我们还调用 `trigger` 方法触发了自定义事件 `my-custom-event`。
+点击下方demo中的Create A Task按键可以看到对事件监听产生的效果。
+点击不同Tab页，可以切换查看代码及最终效果。
+
+<iframe height="460" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Listening &amp; Triggering Events" src="https://codepen.io/Kickoff/embed/XWKZPqx?height=460&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/XWKZPqx'>Kickoff Tutorial - Listening &amp; Triggering Events</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+需要注意的是，如果需要在某些时刻解除对内置事件的监听，要在添加监听的时候为事件增加命名空间。
+
+```javascript
+myKickoff.task.on("after-create.my-namespace", function () {...})
+```
+
+这样做的目的是，解除监听的时候可以精确匹配到命名空间所对应的监听函数。
+
+```javascript
+myKickoff.task.off("after-create.my-namespace")
+```
+
+如果未研读过源码，对Kickoff的运行机制不熟悉，
+**切忌不要在不使用命名空间的情况下解除内置事件监听，
+以防导致所有监听函数被解除而引起意想不到的问题。**
+
+其他内置事件以及关于事件的更多内容，
+请查看 <%= link_to 'Task', find_route_uri('api_task') %> API
+和 <%= link_to 'Timeline', find_route_uri('api_timeline') %> API。

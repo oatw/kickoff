@@ -1,0 +1,129 @@
+[class *= kickoff-ico-]
+  display: inline-block
+  vertical-align: middle
+  position: relative
+  width: 1em
+  height: 1em
+  font-size: 1em
+  line-height: 1
+  // overflow: hidden
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  object-fit: contain
+  object-position: center
+  font-style: normal
+  background-position: center
+  background-size: contain
+
+[class *= kickoff-ico-]::before,
+[class *= kickoff-ico-]::after
+  display: block
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+
+.kickoff-ico-cross::before,
+.kickoff-ico-plus::before,
+.kickoff-ico-minus::before
+  width: 0.9em
+  height: 2px
+
+.kickoff-ico-cross::after,
+.kickoff-ico-plus::after
+  width: 2px
+  height: 0.9em
+
+.kickoff-ico-cross::before,
+.kickoff-ico-plus::before,
+.kickoff-ico-cross::after,
+.kickoff-ico-plus::after,
+.kickoff-ico-minus::before
+  content: ""
+  background: currentColor
+
+.kickoff-ico-cross::before,
+.kickoff-ico-cross::after
+  transform: translate(-50%, -50%) rotate(45deg)
+
+.kickoff-ico-copy::before,
+.kickoff-ico-diamond::before
+  top: 40%
+  left: 40%
+  width: 0.9em
+  height: 0.9em
+  border: 2px solid currentColor
+  border-right: none
+  border-bottom: none
+  content: ""
+  border-radius: 2px
+
+.kickoff-ico-copy::after,
+.kickoff-ico-diamond::after
+  top: 60%
+  left: 60%
+  width: 0.9em
+  height: 0.9em
+  border: 2px solid currentColor
+  content: ""
+  border-radius: 2px
+
+.kickoff-ico-diamond
+  transform: rotate(45deg) scale(0.9)
+
+.kickoff-ico-delete::before
+  top: 60%
+  width: 0.75em
+  height: 0.75em
+  border: 2px solid currentColor
+  border-top: none
+  content: ""
+  border-bottom-right-radius: 2px
+  border-bottom-left-radius: 2px
+
+.kickoff-ico-delete::after
+  top: 0.05em
+  width: 0.5em
+  height: 2px
+  content: ""
+  background: currentColor
+  box-shadow: -0.25em 0.2em, 0.25em 0.2em
+
+.kickoff-ico-edit::before
+  width: 0.9em
+  height: 0.5em
+  border: 2px solid currentColor
+  content: ""
+  transform: translate(-40%, -60%) rotate(-45deg)
+
+.kickoff-ico-edit::after
+  top: 95%
+  left: 5%
+  width: 0
+  height: 0
+  border: 2px solid currentColor
+  content: ""
+  border-top-color: transparent
+  border-right-color: transparent
+  transform: translate(0, -100%)
+
+.kickoff-ico-left::before,
+.kickoff-ico-right::before,
+.kickoff-ico-down::before
+  width: 0.6em
+  height: 0.6em
+  border: solid 2px
+  border-right: none
+  border-bottom: none
+  content: ""
+
+.kickoff-ico-left::before
+  transform: translate(-25%, -50%) rotate(-45deg)
+
+.kickoff-ico-right::before
+  transform: translate(-75%, -50%) rotate(135deg)
+
+.kickoff-ico-down::before
+  transform: translate(-50%, -75%) rotate(225deg)

@@ -1,0 +1,25 @@
+<!-- markdownlint-disable -->
+# 自定义动作
+
+Kickoff支持扩展自定义动作，无论是具体某一个任务还是根任务动作，
+都可以通过设定对应的`actions`配置项并添加对应的渲染函数来实现自定义动作的定制。
+
+## 开始实践
+
+在下面的例子中，我们来对组件头部动作的根任务动作进行扩展，添加一个countDescendants动作，
+在点击Count动作按键时，打印出当前根任务的后代任务数量。
+
+我们先在`actions`配置项中添加countDescendants动作，
+然后再定义一个`renderHeaderActionCountDescendants`渲染函数就可以了，
+函数名称的匹配规则为`renderHeaderAction` + 首字母大写的动作名称。
+这个函数接受两个参数，一个是根任务实例rootTask，还有一个用于挂载渲染内容的dom节点$container。
+
+<iframe height="460" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Managing Custom Actions" src="https://codepen.io/Kickoff/embed/VwKQMjd?height=460&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/VwKQMjd'>Kickoff Tutorial - Managing Custom Actions</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+对于自定义动作及自定义渲染的更多内容，
+请查看 <%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API
+和
+<%= link_to '自定义渲染教程', find_route_uri('tutorial_render') %>。

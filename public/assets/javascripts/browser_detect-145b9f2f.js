@@ -1,0 +1,1 @@
+function isSpecificBrowser(r){try{return navigator.userAgent.toLowerCase().indexOf(r)>-1}catch(r){return!1}}function isChrome(){return isSpecificBrowser("chrome")}function isFirefox(){return isSpecificBrowser("firefox")}var fallbackUrl="/kickoff/unsupported_browser/";isChrome()||isFirefox()||(location.href=fallbackUrl);

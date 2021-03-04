@@ -1,0 +1,135 @@
+.kickoff-gantt-timeline-background
+  position: absolute
+  top: 0
+  left: 0
+  height: 100%
+  background: $kickoff-gantt-timeline-background
+
+.kickoff-gantt-timeline
+  // position: relative
+  position: sticky
+  top: 0
+  z-index: 2
+  align-self: flex-start
+  font-weight: 700
+  background: $kickoff-gantt-timeline-background
+
+.kickoff-header ~ .kickoff-gantt .kickoff-gantt-timeline
+  top: $kickoff-header-height
+
+.kickoff-gantt-timeline-background,
+.kickoff-gantt-timeline,
+.kickoff-gantt-timeline-group
+  display: flex
+  text-align: center
+
+.kickoff-gantt-timeline-background,
+.kickoff-gantt-timeline > *,
+.kickoff-gantt-timeline-group > *
+  flex-grow: 0
+  flex-shrink: 0
+
+.kickoff-gantt-timeline-label
+  position: relative
+  z-index: 1
+  width: 100%
+  max-height: $kickoff-gantt-timeline-line-height
+  font-size: $kickoff-gantt-timeline-font-size
+  line-height: $kickoff-gantt-timeline-line-height
+  overflow: hidden
+
+.kickoff-gantt-timeline-background .kickoff-gantt-timeline-cell
+  box-shadow: inset 1px 0 0 $kickoff-border-color
+
+.kickoff-gantt-timeline-background .kickoff-gantt-timeline-cell:first-child
+  box-shadow: none
+
+.kickoff-gantt-timeline-resize-detector
+  display: block
+  width: 100%
+  height: 0
+  border: none
+  overflow: hidden
+
+.kickoff-gantt-timeline-depth0
+  width: min-content
+
+[class *= kickoff-gantt-timeline-depth],
+.kickoff-gantt-timeline-inclusion-left,
+.kickoff-gantt-timeline-exclusion-left,
+.kickoff-gantt-timeline-inclusion-left.kickoff-gantt-timeline-inclusion-right,
+.kickoff-gantt-timeline-exclusion-left.kickoff-gantt-timeline-exclusion-right
+  box-shadow: inset 1px 1px 0 $kickoff-border-color, inset 0 -1px 0 $kickoff-border-color
+
+[class *= kickoff-gantt-timeline-depth]:first-child
+  box-shadow: inset 0 1px 0 $kickoff-border-color, inset 0 -1px 0 $kickoff-border-color
+
+.kickoff-gantt-timeline-inclusion-right,
+.kickoff-gantt-timeline-exclusion-right
+  box-shadow: inset 0 -1px 0 $kickoff-border-color
+
+.kickoff-gantt-timeline-cell
+  position: relative
+  width: $kickoff-gantt-timeline-cell-width
+  background: $kickoff-gantt-timeline-cell-background
+
+.kickoff-gantt-timeline-exclusion,
+.kickoff-gantt-timeline-inclusion
+  position: absolute
+  top: 0
+  height: 100%
+  background: $kickoff-gantt-timeline-cell-exclusion-background
+
+.kickoff-gantt-timeline-inclusion
+  background: $kickoff-gantt-timeline-cell-inclusion-background
+
+.kickoff-gantt-timeline-flag-label,
+.kickoff-gantt-timeline-flag-line
+  position: absolute
+  top: 0
+  height: 100%
+
+.kickoff-gantt-timeline-flag-label
+  display: flex
+  z-index: 2
+  align-items: center
+  padding: $kickoff-gantt-timeline-flag-label-padding
+  border: solid 2px $kickoff-gantt-timeline-flag-label-border-color
+  font-size: $kickoff-gantt-timeline-flag-label-font-size
+  white-space: nowrap
+  color: $kickoff-gantt-timeline-flag-label-color
+  font-weight: 700
+  background: $kickoff-gantt-timeline-flag-label-background
+  border-radius: $kickoff-border-radius
+
+.kickoff-gantt-timeline-flag-label:active
+  background: $kickoff-gantt-timeline-flag-label-background
+
+.kickoff-gantt-timeline-flag-label:hover
+  z-index: 3
+
+.kickoff-gantt-timeline-flag-line
+  border-left: dotted 2px $kickoff-gantt-timeline-flag-line-color
+
+.kickoff-gantt-timeline-cell.kickoff-gantt-timeline-year
+  width: $kickoff-gantt-timeline-cell-year-width
+  background: $kickoff-gantt-timeline-cell-year-background
+
+.kickoff-gantt-timeline-cell.kickoff-gantt-timeline-month
+  width: $kickoff-gantt-timeline-cell-month-width
+  background: $kickoff-gantt-timeline-cell-month-background
+
+.kickoff-gantt-timeline-cell.kickoff-gantt-timeline-week
+  width: $kickoff-gantt-timeline-cell-week-width
+  background: $kickoff-gantt-timeline-cell-week-background
+
+.kickoff-gantt-timeline-cell.kickoff-gantt-timeline-day
+  width: $kickoff-gantt-timeline-cell-day-width
+  background: $kickoff-gantt-timeline-cell-day-background
+
+.kickoff-gantt-timeline-cell.kickoff-gantt-timeline-hour
+  width: $kickoff-gantt-timeline-cell-hour-width
+  background: $kickoff-gantt-timeline-cell-hour-background
+
+.kickoff-gantt-timeline-cell.kickoff-gantt-timeline-weekend
+  background: $kickoff-gantt-timeline-cell-weekend-background

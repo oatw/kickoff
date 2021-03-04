@@ -1,0 +1,23 @@
+<!-- markdownlint-disable -->
+# 时间线旗标
+
+时间线旗标是显示在gantt视图上的重要日期标记，可以起到显著的任务排期参考作用。
+
+在Kickoff中设置时间线旗标，只需在组件实例初始化的时候配置flags选项，flags选项是Array型，
+每个元素应为Object结构，其中label字段用于显示旗标的文字，time字段用于指定旗标在时间线中的位置。
+
+如果需要自定义旗标的css样式，还可以制定一个cls字段，
+该字段会被作为一个css class添加到对应旗标的dom节点上，可以在这个class范围内编写自定义样式。
+
+## 开始实践
+
+在下面的例子中，我们设置了两个旗标，其中一个添加了自定义的css样式。
+
+<iframe height="460" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Creating Timeline Flags" src="https://codepen.io/Kickoff/embed/yLavBdz?height=460&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/yLavBdz'>Kickoff Tutorial - Creating Timeline Flags</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+更多内容请参考 <%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API、
+<%= link_to 'Timeline', find_route_uri('api_timeline') %> API
+中关于数据结构部分的说明。

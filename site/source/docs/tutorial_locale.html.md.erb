@@ -1,0 +1,24 @@
+<!-- markdownlint-disable -->
+# 多语言
+
+多语言的配置通常是在项目级的独立模块中进行管理，Kickoff支持通过设定`locale`来实现组件内置
+UI元素的语言配置。无论业务项目中有多少中语言配置，都可以按照指定的数据结构在Kickoff初始化时，
+通过`locale`配置项进行设置。对于`locale`配置项中缺失的字段，
+Kickoff内部将使用默认值对UI元素的文字进行填充。
+
+## 开始实践
+
+下面，我们来通过配置`locale`来实现Kickoff的汉化。因为代码比较简单，因此不做过多说明。
+可以查看下例各个视图及表单中的汉化效果。
+
+<iframe height="530" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Setting Locale" src="https://codepen.io/Kickoff/embed/jOMZbzz?height=530&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/jOMZbzz'>Kickoff Tutorial - Setting Locale</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+在Kickoff内部，对UI元素文字显示的数据源查找优先级遵循这样一个原则：显示的文字设定 >
+`locale`文字设定 > 属性名称。比如说在`tableColumns`这个配置项中，如果为一列指定了`title`，
+那么就会使用`title`值来作为表格标题，如果没有设置，则会在`locale`设置中寻找任务对应属性的语言设置，
+如果也找不到，就会默认使用属性名。
+
+更多关于`locale`的配置内容，请查看 <%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API。

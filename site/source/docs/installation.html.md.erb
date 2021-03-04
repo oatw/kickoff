@@ -1,0 +1,66 @@
+# 安装
+
+Kickoff依赖于 [Luda / Kernel Engine](https://oatw.github.io/luda/0.3.x/advanced/api)，
+目前提供两种常用方式对二者进行安装。
+
+## 使用包管理器安装Kickoff
+
+第一步：使用Yarn或Npm下载
+
+```plaintext
+yarn add luda <%= download_uri('tgz') %>
+```
+<p class="p-none m-none">或</p>
+```plaintext
+npm install luda <%= download_uri('tgz') %> --save
+```
+
+第二步：引入sass
+
+```sass
+// 在sass或scss入口文件中引入自定义变量
+@import path_to_your_sass_variables
+// 在sass或scss入口文件中引入Kickoff的sass样式文件
+@import 'path_to_node_modules/kickoff/src/sass/index'
+```
+
+第三步：引入Javascript
+
+```js
+// 在Javascript入口文件中引入Luda/Kernel Engine的Javascript文件
+import 'luda/src/js/kernel/index'
+// 在Javascript入口文件中引入Kickoff的Javascript文件
+import 'kickoff'
+```
+
+## 安装编译好的Javascript和css
+
+**此安装方式适用于使用Luda内置组件作为主要组件库的场景，如在项目中已使用其它组件库，
+请使用包管理器安装Kickoff。**
+
+第一步：下载编译好的文件
+
+<p class="p-none m-none">
+  <%= link_to "下载 Luda", "https://raw.githubusercontent.com/oatw/luda/v0.3.3/release/dist/luda-0.3.3.zip", class: 'btn btn-primary' %>
+  <%= link_to "下载 Kickoff v#{data.kickoff.version}", download_uri('zip'), class: 'btn btn-primary' %>
+</p>
+
+第二步：在模板中引入文件
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Hi Kickoff!</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <link rel="stylesheet" href="path_to/luda-default.min.css">
+    <link rel="stylesheet" href="path_to/kickoff.min.css">
+  </head>
+  <body>
+    <h1>Hi Luda!</h1>
+    <script src="path_to/luda.min.js"></script>
+    <script src="path_to/kickoff.min.js"></script>
+  </body>
+</html>
+```

@@ -1,0 +1,15 @@
+.kickoff-proper-popover
+  display: none
+  position: fixed
+  z-index: -1
+  padding: $kickoff-proper-popover-padding
+
+.kickoff-proper-preactive .kickoff-proper-popover,
+.kickoff-proper-active .kickoff-proper-popover
+  display: block
+
+.kickoff-proper-active .kickoff-proper-popover
+  z-index: 3
+
+.kickoff-proper.kickoff-proper-tmp-hide .kickoff-proper-popover
+  display: none

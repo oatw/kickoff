@@ -1,0 +1,259 @@
+.kickoff-form
+  display: flex
+  flex-wrap: wrap
+
+.kickoff-form > *
+  flex: 1 1 50%
+  max-width: 50%
+
+.kickoff-form > .kickoff-form-textarea
+  max-width: 100%
+
+.kickoff-form-text,
+.kickoff-form-number,
+.kickoff-form-textarea,
+.kickoff-form-select,
+.kickoff-form-time,
+.kickoff-form-custom-field
+  padding: $kickoff-form-field-padding
+
+.kickoff-form-field-group,
+.kickoff-form-custom-field-group
+  padding: $kickoff-form-field-group-padding
+
+.kickoff-form-input,
+.kickoff-form-number-input,
+.kickoff-form-textarea-input,
+.kickoff-form-select-selected-labels,
+.kickoff-form-select-option,
+.kickoff-form-time-selected-label
+  width: 100%
+  height: $kickoff-form-input-height
+  padding: $kickoff-form-input-padding
+  font-size: $kickoff-form-input-font-size
+  line-height: $kickoff-form-input-height
+
+  &::-webkit-inner-spin-button,
+  &::-webkit-outer-spin-button
+    display: none
+
+  &[type=number]
+    -moz-appearance: textfield
+
+  &::-ms-clear
+    display: none
+
+  &::-webkit-search-cancel-button
+    -webkit-appearance: none
+
+  &::-webkit-calendar-picker-indicator
+    display: none
+
+  &::-webkit-contacts-auto-fill-button
+    display: none !important
+
+  &::-webkit-credentials-auto-fill-button
+    display: none !important
+
+  &::-webkit-caps-lock-indicator
+    display: none !important
+
+  &::-webkit-input-placeholder
+    color: $kickoff-form-placeholder-color
+
+  &::-moz-placeholder
+    opacity: 1
+    color: $kickoff-form-placeholder-color
+
+  &:-ms-input-placeholder
+    color: $kickoff-form-placeholder-color
+
+.kickoff-form-input,
+.kickoff-form-number-input,
+.kickoff-form-textarea-input,
+.kickoff-form-select-selected-labels,
+.kickoff-form-select-input,
+.kickoff-form-time-selected-label,
+.kickoff-form-time-input
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  display: block
+  border: solid $kickoff-form-input-border-width $kickoff-form-input-border-color
+  color: $kickoff-form-input-color
+  background: $kickoff-form-input-background
+  border-radius: $kickoff-border-radius
+
+.kickoff-form-textarea-input
+  height: $kickoff-form-input-multiple-rows-height
+  padding: $kickoff-form-input-multiple-rows-padding
+  overflow: auto
+
+.kickoff-form-select-selected-labels
+  padding-right: $kickoff-form-select-padding-right
+  cursor: default
+  background: url($kickoff-form-select-simulated-input-icon) right 1em (center / 1em) no-repeat, $kickoff-form-input-background
+
+.kickoff-form-time-selected-label
+  padding-right: $kickoff-form-time-padding-right
+  cursor: default
+  background: url($kickoff-form-time-simulated-input-icon) right 1em (center / 1em) no-repeat, $kickoff-form-input-background
+
+.kickoff-form-select-simulated,
+.kickoff-form-time-simulated
+  position: relative
+
+.kickoff-form-select-options,
+.kickoff-form-time-dropdown
+  position: absolute
+  top: 100%
+  left: 0
+  z-index: 1
+  width: 100%
+  border-radius: $kickoff-border-radius
+
+.kickoff-form-select-options
+  max-height: $kickoff-form-select-options-max-height
+  padding: $kickoff-form-select-options-padding
+  overflow: auto
+  background: $kickoff-form-select-options-background
+  box-shadow: $kickoff-form-select-options-box-shadow
+
+.kickoff-form-time-dropdown
+  padding: $kickoff-form-time-dropdown-padding
+  font-size: $kickoff-form-time-dropdown-font-size
+  line-height: $kickoff-form-time-dropdown-line-height
+  color: $kickoff-form-time-dropdown-color
+  background: $kickoff-form-time-dropdown-background
+  box-shadow: $kickoff-form-time-dropdown-box-shadow
+
+.kickoff-form-select-options.is-hidden,
+.kickoff-form-time-dropdown.is-hidden
+  display: none
+
+.kickoff-form-select-option
+  display: flex
+  flex-wrap: nowrap
+  align-items: center
+  overflow: hidden
+
+.kickoff-form-select-option:hover
+  background: $kickoff-form-select-option-hover-background
+
+.kickoff-form-time-input:hover
+  background: $kickoff-form-time-date-cell-hover-background
+
+[class *= kickoff].kickoff-form-select-option[readonly],
+[class *= kickoff].kickoff-form-input[readonly],
+[class *= kickoff].kickoff-form-number-input[readonly],
+[class *= kickoff].kickoff-form-textarea-input[readonly],
+[class *= kickoff].kickoff-form-select-selected-labels.is-readonly,
+[class *= kickoff].kickoff-form-time-selected-label.is-readonly
+  cursor: not-allowed
+  opacity: $kickoff-disabled-opacity
+
+.kickoff-form-select-option[readonly] [disabled],
+.kickoff-form-time-date[readonly] [disabled]
+  opacity: 1
+
+.kickoff-form-select-input
+  width: $kickoff-form-select-option-cube-size
+  height: $kickoff-form-select-option-cube-size
+  margin-right: 1em
+
+.kickoff-form-time-dropdown-header
+  display: flex
+  align-items: center
+  justify-content: space-between
+  font-weight: 700
+
+.kickoff-form-time-month
+  table-layout: fixed
+  width: 100%
+  text-align: center
+
+.kickoff-form-time-month th
+  padding: $kickoff-form-time-month-th-padding
+
+.kickoff-form-time-date
+  display: block
+  position: relative
+  width: $kickoff-form-time-date-cell-size
+  height: $kickoff-form-time-date-cell-size
+  margin: $kickoff-form-time-date-cell-margin
+
+.kickoff-form-time-input
+  width: 100%
+  height: 100%
+  border: none
+  cursor: pointer
+
+.kickoff-form-time-input-label
+  display: flex
+  position: absolute
+  top: 0
+  right: 0
+  align-items: center
+  justify-content: center
+  width: 100%
+  height: 100%
+  pointer-events: none
+
+.kickoff-form-select-input:checked
+  background: $kickoff-form-select-option-cube-checked-background
+
+.kickoff-form-time-input:checked
+  background: $kickoff-form-time-date-cell-checked-background
+
+.kickoff-form-select-input[type=radio],
+.kickoff-form-time-input[type=radio]
+  border-radius: 100%
+
+.kickoff-form-input:focus,
+.kickoff-form-number-input:focus,
+.kickoff-form-textarea-input:focus,
+.kickoff-form-select-selected-labels:focus,
+.kickoff-form-select-input:focus,
+.kickoff-form-time-selected-label:focus
+  box-shadow: $kickoff-form-input-focus-box-shadow
+
+.kickoff-form-time-input:focus
+  background: $kickoff-form-time-date-cell-hover-background
+  outline: none
+
+.kickoff-form-input.is-invalid:focus,
+.kickoff-form-number-input.is-invalid:focus,
+.kickoff-form-textarea-input.is-invalid:focus,
+.kickoff-form-select-selected-labels.is-invalid:focus,
+.kickoff-form-time-selected-label.is-invalid:focus
+  box-shadow: $kickoff-form-input-invalid-focus-box-shadow
+
+.kickoff-form-label,
+.kickoff-form-field-group-label
+  display: block
+  font-size: $kickoff-form-label-font-size
+  line-height: $kickoff-form-label-line-height
+  white-space: nowrap
+  overflow: hidden
+  color: $kickoff-form-label-color
+  font-weight: bold
+  text-overflow: ellipsis
+
+.kickoff-form-label
+  padding: $kickoff-form-label-padding
+
+.kickoff-form-field-group-label
+  padding: $kickoff-form-field-group-label-padding
+
+.kickoff-form-error
+  display: block
+  font-size: $kickoff-form-error-font-size
+  line-height: $kickoff-form-error-line-height
+  color: $kickoff-form-error-color
+
+.kickoff-form-input.is-invalid,
+.kickoff-form-number-input.is-invalid,
+.kickoff-form-textarea-input.is-invalid,
+.kickoff-form-select-selected-labels.is-invalid,
+.kickoff-form-time-selected-label.is-invalid
+  border-color: $kickoff-form-input-invalid-border-color

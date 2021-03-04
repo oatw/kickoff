@@ -1,0 +1,12 @@
+<aside id="doc-aside" class="flex-ungrowable flex-unshrinkable">
+  <nav id="doc-nav" class="of-auto p-large">
+    <% data.site.menu.each do |section| %>
+      <div class="mb-small">
+        <h2 class="h6 mb-small"><%= section.title %></h2>
+        <% section.items.each do |item| %>
+          <%= link_to item.label, item.uri, class: "p8 p-none td-none #{current_page.url.end_with?(item.uri.sub(/\.html$/, '/')) ? 'doc-nav-current-link' : ''}" %>
+        <% end %>
+      </div>
+    <% end %>
+  </nav>
+</aside>

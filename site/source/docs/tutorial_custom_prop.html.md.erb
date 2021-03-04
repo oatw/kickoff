@@ -1,0 +1,57 @@
+<!-- markdownlint-disable -->
+# 自定义属性
+
+## 任务实例与数据对象的关系
+
+对于一个 <%= link_to 'Task', find_route_uri('api_task') %> 实例而言，其数据对象可以在Task实例创建时输入，
+该数据对象会存储在创建完成的Task实例的`data`属性中。
+后续调用Task实例方法对数据对象的更新会反映到其`data`属性中。
+
+## 预留字段
+
+任务数据对象中的字段除了 `wbs`、`name`、
+`type(0.2.0新增)`、`actions(0.2.0新增)`、`readonlyProps(0.2.0新增)`、`beginning`、
+`end`、`duration`、`dependencies`、`operations`、`predecessors`、`successors`
+为非自定义字段外，其余自行追加字段均被视作自定义字段。
+出于未来迭代的考虑，有一些预留字段不建议作为自定义字段使用，这些字段有：`state`、`status`、
+`progress`、`resources`、`duty`、`milestones`、`errors`、`events`。
+
+## 内置增强属性与计算属性
+
+Kickoff中任务的数据对象中有两类特殊的属性，增强属性和计算属性。
+
+增强属性是指该属性的查询和更新可以经由特定的方法，来实现更便利的开发体验。
+如任务实例`data`中的`beginning`属性，可以通过实例的`.beginning()`方法进行读或写，
+在通过该方法读的时候会返回操作更便捷的`Time`对象，而通过该方法写的时候，
+可以对该任务关联的其他任务及父子任务的开始时间作出必要的更新，
+而不用开发人员手动查询关联关系进行手动更新。
+
+计算属性本质上也是一类增强属性，特殊的在于任务实例`data`对象中并没有该属性的存储空间，
+而是通过其他属性计算得出。如`duration`属性，在任务实例`data`中并没有存储空间，
+但在调用`.duration()`方法进行读或写时，
+可得到任务的周期或通过`data`中`beginning`属性的值计算并设置任务`data`中的`end`属性值。
+
+增强属性和计算属性都是Kickoff内置的，
+在 <%= link_to 'Task', find_route_uri('api_task') %> API
+中可以找到诸多用来服务于增强属性和计算属性的实例方法。
+
+对于任务`data`对象的自定义属性如果要实现增强或计算机制，需要开发者自行实现。
+
+## 开始实践
+
+在下面的例子中，我们来为任务模型的数据对象来添加一个自定义属性releaseStatus。
+首先，我们在任务的`before-create`事件监听函数中为这个自定义属性设置默认值，这一步不是必须的，
+如果不需要该属性有默认值，则可跳过。另外，我们在任务编辑表单中为该属性指定表单项类型为`select`，
+并配置可选项`options`,以支持该属性的编辑。
+最后，我们对table view的显示列作出配置，以显示该自定义属性。
+
+<iframe height="460" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Managing Custom Properties" src="https://codepen.io/Kickoff/embed/eYdVmrN?height=460&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/eYdVmrN'>Kickoff Tutorial - Managing Custom Properties</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+关于任务事件和表单配置的更多内容可以查看
+<%= link_to '事件教程', find_route_uri('tutorial_event') %>、
+<%= link_to '表单渲染教程', find_route_uri('tutorial_form') %>
+以及 <%= link_to 'Task', find_route_uri('api_task') %> API
+和 <%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API。

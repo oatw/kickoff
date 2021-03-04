@@ -1,0 +1,56 @@
+<!-- markdownlint-disable -->
+# 任务动作与只读属性
+
+任务动作指的是对任务执行CRUD及一系列会改变任务属性状态的动作。
+通常来说，如果一条数据记录与用户的操作权限产生关系，那么就要对用户对当前记录可执行的动作进行限制。
+这通常是由业务项目中独立的一个模块来进行控制，严谨的实现是通过后端的模型层来控制用户对数据记录的操作。
+
+Kickoff作为前端组件，本身不内置权限管理，
+提供的是任务动作配置和属性只读配置来实现对一个具体任务可执行操作的控制，
+通过这种方式，可以将业务项目中的权限管理模块与Kickoff灵活地结合。
+
+需要注意的是，Kickoff对于任务可执行操作的控制和只读属性的控制是限制在UI层的，并不限制前端模型层。
+这意味着从开发者的角度而言，前端程序可对任务执行任何操作，并不限制灵活性。
+
+## 开始实践
+
+在下面的例子中，我们假设当前用户无权限对其他用户创建的任务执行任何操作。
+我们对已创建的任务在组件初始化时进行遍历，如果不是当前用户创建的就设置actions属性，置为空数组，
+这样一来，对于这个任务，在当前用户的UI视图上任何涉及到模型数据变化的元素和交互都不会显示及响应。
+然而当前用户自行创建的任务则不受影响。
+
+对于批量型动作，Kickoff也会根据任务的actions配置进行自动响应。
+如头部的Destroy Items，在当前用户不具备删除其他用户创建的任务的动作配置时，即使选择了该任务，
+也不会响应点击事件。
+
+事实上，关于任务actions的配置，Kickoff不仅支持具体某一任务的配置，
+而且支持根任务可执行actions的配置。对于任务actions配置的详细内容，以及内置默认的actions，
+请查看 <%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API
+和
+<%= link_to 'Task', find_route_uri('api_task') %> API
+数据结构部分内容。
+
+<iframe height="460" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Controlling Actions" src="https://codepen.io/Kickoff/embed/YzGezZP?height=460&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/YzGezZP'>Kickoff Tutorial - Controlling Actions</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+接下来，我们再看一个例子，在这个例子中，我们将了解如何设置任务的只读属性。
+我们假设当前用户被上级指派为一个任务的负责人，且不具备修改这个任务负责人的权限。
+我们可以在初始化Kickoff组件时，设置这个任务的readonlyProps，使自定义字段duty在readonlyProps
+数组内。这样，在UI视图上，当前用户在打开编辑表单的时候，duty输入框就会是只读状态。
+
+对于任务readonlyProps配置的详细内容，以及内置默认的readonlyProps，
+请查看 <%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API
+和
+<%= link_to 'Task', find_route_uri('api_task') %> API
+数据结构部分内容。
+
+<iframe height="460" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Controlling Readonly Properties" src="https://codepen.io/Kickoff/embed/oNzENdg?height=460&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/oNzENdg'>Kickoff Tutorial - Controlling Readonly Properties</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+最后，来思考一个问题，如果一个任务的开始时间需要被设置为只读，
+同时不应该被新创建的子任务的开始时间影响，应该怎么处理呢？
+提示：<%= link_to '模型校验教程', find_route_uri('tutorial_validate') %>

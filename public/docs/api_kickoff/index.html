@@ -1,0 +1,278 @@
+<!doctype html> <html class=bc-primary lang=zh-cmn-Hans> <head> <meta charset=UTF-8> <title>Kickoff - 可能是东北三省最灵活易用的任务管理组件</title> <meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"> <meta name=renderer content=webkit> <meta http-equiv=X-UA-Compatible content="IE=Edge,chrome=1"> <meta name=apple-mobile-web-app-capable content=yes> <meta name=apple-mobile-web-app-status-bar-style content=black-translucent> <meta name=apple-mobile-web-app-title content=kickoff> <meta name=mobile-web-app-capable content=kickoff> <meta name=application-name content=kickoff> <meta content="telephone=no" name=format-detection> <meta name=msapplication-tap-highlight content=no> <meta name=author content=""> <meta name=keywords content=kickoff> <meta name=description content=kickoff> <link rel="shortcut icon" href="/kickoff/favicon.ico"> <script src="https://unpkg.com/turbolinks@5.2.0/dist/turbolinks.js"></script> <script src="/kickoff/assets/javascripts/browser_detect-145b9f2f.js" data-turbolinks-track=reload></script> <script src="https://unpkg.com/luda@0.3.3/dist/js/luda-degradation.min.js" data-turbolinks-track=reload></script> <link href="https://unpkg.com/luda@0.3.3/dist/css/luda-default.min.css" rel=stylesheet data-turbolinks-track=reload> <link href="/kickoff/assets/stylesheets/kickoff/kickoff.min-ddd98cfa.css" rel=stylesheet data-turbolinks-track=reload /> <link href="/kickoff/assets/stylesheets/site-0cffdc65.css" rel=stylesheet data-turbolinks-track=reload /> <script src="https://unpkg.com/luda@0.3.3/dist/js/luda.min.js" data-turbolinks-track=reload></script> <script src="/kickoff/assets/javascripts/kickoff/kickoff.min-1c26c330.js" data-turbolinks-track=reload></script> <script src="/kickoff/assets/javascripts/site-e8cfef04.js" data-turbolinks-track=reload></script> </head> <body class="d-flex fd-column jc-between b-primary"> <header class="hollow-header sti-t zi-highest d-flex jc-between ai-center py-small px-large"> <a href="/kickoff/" class="hollow-header-logo py-tiny" data-turbolinks=false> <img src="/kickoff/assets/images/logo-ec45e657.svg" alt=logo class=d-block width=757 height=187 /> </a> <nav class="d-flex p7"> <a href="/kickoff/docs/general/" class="link-light px-small td-none">文档</a> <a href="https://codepen.io/collection/DgqZqO" class="link-light px-small td-none">示例</a> <a href="https://github.com/oatw/kickoff/blob/master/CHANGELOG.md" class="link-light px-small td-none">变更日志</a> <a href="https://github.com/oatw/kickoff" class="link-light px-small td-none">源码仓库</a> <a href="https://github.com/oatw/kickoff/raw/v0.2.4/release/kickoff-0.2.4.zip" class="btn btn-hollow-light btn-small px-small circle ml-small o-main">下载 v0.2.4</a> <a href="/kickoff/docs/general/" class="btn btn-light btn-small px-small c-primary circle ml-medium o-main">开始使用</a> </nav> </header> <main id=main class="rel zi-high"> <div id=doc class="d-flex jc-between min-h-100vh bc-light"> <aside id=doc-aside class="flex-ungrowable flex-unshrinkable"> <nav id=doc-nav class="of-auto p-large"> <div class=mb-small> <h2 class="h6 mb-small">开始</h2> <a href="/kickoff/docs/general/" class="p8 p-none td-none ">简介</a> <a href="/kickoff/docs/installation/" class="p8 p-none td-none ">安装</a> <a href="/kickoff/docs/browser_support/" class="p8 p-none td-none ">兼容性</a> </div> <div class=mb-small> <h2 class="h6 mb-small">教程</h2> <a href="/kickoff/docs/tutorial_introduction/" class="p8 p-none td-none ">入门</a> <a href="/kickoff/docs/tutorial_config/" class="p8 p-none td-none ">配置</a> <a href="/kickoff/docs/tutorial_event/" class="p8 p-none td-none ">事件</a> <a href="/kickoff/docs/tutorial_theming/" class="p8 p-none td-none ">主题</a> <a href="/kickoff/docs/tutorial_special_date/" class="p8 p-none td-none ">特殊日期</a> <a href="/kickoff/docs/tutorial_flag/" class="p8 p-none td-none ">时间线旗标</a> <a href="/kickoff/docs/tutorial_action_readonly/" class="p8 p-none td-none ">任务动作与只读属性</a> <a href="/kickoff/docs/tutorial_custom_action/" class="p8 p-none td-none ">自定义动作</a> <a href="/kickoff/docs/tutorial_custom_prop/" class="p8 p-none td-none ">自定义属性</a> <a href="/kickoff/docs/tutorial_validate/" class="p8 p-none td-none ">模型校验</a> <a href="/kickoff/docs/tutorial_render/" class="p8 p-none td-none ">自定义渲染</a> <a href="/kickoff/docs/tutorial_form/" class="p8 p-none td-none ">表单渲染</a> <a href="/kickoff/docs/tutorial_locale/" class="p8 p-none td-none ">多语言</a> </div> <div class=mb-small> <h2 class="h6 mb-small">API</h2> <a href="/kickoff/docs/api_kickoff/" class="p8 p-none td-none doc-nav-current-link">Kickoff</a> <a href="/kickoff/docs/api_task/" class="p8 p-none td-none ">Task</a> <a href="/kickoff/docs/api_time/" class="p8 p-none td-none ">Time</a> <a href="/kickoff/docs/api_timeline/" class="p8 p-none td-none ">Timeline</a> </div> </nav> </aside> <article id=doc-article class="article w-100 px-large pb-large"> <h1>API - Kickoff</h1> <h2>数据结构</h2> <div class=highlight><pre class="code plaintext"><code>@typedef {Object} KickoffInstance - Kickoff组件实例
+@prop {KickoffInstanceConfig} config - Kickoff组件实例配置
+@prop {RootTaskInstance} task - Kickoff组件实例根任务
+@prop {TimelineInstance} timeline - Kickoff组件实例时间线
+</code></pre></div> <div class=highlight><pre class="code plaintext"><code>@typedef {Object} KickoffInstanceConfig - Kickoff组件实例配置对象
+
+@prop {boolean} [excludeWeekends = true] - 周六、日是否为例外日期
+@prop {TimeRange[]} [exclusions = []] - 工作日例外周期数组，范围内不计入任务周期
+@prop {TimeRange[]} [inclusions = []] - 节假日例外周期数组，范围内计入任务周期，
+权重高于exclusions和excludeWeekends
+
+@prop {TimelineFlag[]} [flags = []] - 0.2.0新增 时间线重要时间标记
+@prop {integer} [minDurationSeconds = 3600 * 24] - 任务最短周期秒数
+
+@prop {integer} [timelinePadding = 4] - 时间线两侧padding单位长度
+@prop {integer} [timelineLeastRange = 13] - 时间线最小单位长度
+
+@prop {string | Element} target - 在dom中的挂载节点或css选择器
+
+@prop {integer} [resizeRenderDelay = 1000] - 组件尺寸变化后重新渲染时间延迟毫秒
+
+@prop {Array} [actions = ['createTask', 'createMilestone', 'destroyDescendants',
+'switchState']] - 0.2.0新增 根任务可执行动作配置
+
+@prop {boolean} [renderHeader = true] - 是否渲染组件header
+@prop {Function} [renderHeaderActions = null] - 0.2.0新增
+组件header可执行动作自定义渲染函数,传入两个参数，根任务实例rootTask和用于挂载渲染内容的头部
+dom节点$container
+@prop {Function} [renderHeaderActionCreateTask = null] - 0.2.0新增
+组件header中创建任务按键的自定义渲染函数，传入两个参数，根任务实例rootTask和用于挂载渲染内容的
+按键dom节点$container
+@prop {Function} [renderHeaderActionCreateMilestone = null] - 0.2.0新增
+组件header中创建里程碑按键的自定义渲染函数，传入两个参数，根任务实例rootTask和用于挂载渲染内容的
+按键dom节点$container
+@prop {Function} [renderHeaderActionCreateDestroyDescendants = null]- 0.2.0新增
+组件header中删除后代按键的自定义渲染函数，传入两个参数，根任务实例rootTask和用于挂载渲染内容的
+按键dom节点$container
+@prop {Function} [renderHeaderActionCreateSwitchState = null] - 0.2.0新增
+组件header中重做/撤回按键的自定义渲染函数，传入两个参数，根任务实例rootTask和用于挂载渲染内容的
+按键dom节点$container
+@prop {Function} [renderHeaderNavigations = null] - 0.2.0新增
+组件header导航按键自定义渲染函数，传入两个参数，根任务实例rootTask和用于挂载渲染内容的头部dom
+节点$container
+
+@prop {boolean} [renderGantt = true] - 是否渲染组件gantt视图
+@prop {Function} [renderGanttTaskGraph = null] - 0.2.0新增
+gantt视图中任务图形的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容的
+dom节点$container
+@prop {Function} [renderGanttTaskSummary = null] - 0.2.0新增
+gantt视图中里任务概要信息的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容
+的dom节点$container
+@prop {Function} [renderGanttTaskActions = null] - 0.2.0新增
+gantt视图中任务动作的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容的dom
+节点$container
+@prop {Function} [renderGanttTaskActionPick = null] - 0.2.0新增
+gantt视图中任务pick动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容
+的dom节点$container
+@prop {Function} [renderGanttTaskActionFold = null] - 0.2.0新增
+gantt视图中任务fold动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容
+的dom节点$container
+@prop {Function} [renderGanttTaskActionUpdate = null] - 0.2.0新增
+gantt视图中任务update动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容
+的dom节点$container
+@prop {Function} [renderGanttTaskActionDestroy = null] - 0.2.0新增
+gantt视图中任务destroy动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染
+内容的dom节点$container
+@prop {Function} [renderGanttTaskActionCreateTask = null] - 0.2.0新增
+gantt视图中任务createTask动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染
+内容的dom节点$container
+@prop {Function} [renderGanttTaskActionCreateMilestone = null] - 0.2.0新增
+gantt视图中任务createMilestone动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于
+挂载渲染内容的dom节点$container
+@prop {Function} [renderGanttTaskLinkActions = null] - 0.2.0新增
+gantt视图中任务删除前置任务动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染
+内容的dom节点$container
+@prop {Function} [renderGanttMilestoneGraph = null] - 0.2.0新增
+gantt视图中里程碑图形的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于挂载渲染内容
+的dom节点$container
+@prop {Function} [renderGanttMilestoneSummary = null] - 0.2.0新增
+gantt视图中里里程碑概要信息的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于挂载
+渲染内容的dom节点$container
+@prop {Function} [renderGanttMilestoneActions = null] - 0.2.0新增
+gantt视图中里程碑动作的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于挂载渲染内容
+的dom节点$container
+@prop {Function} [renderGanttMilestoneActionPick = null] - 0.2.0新增
+gantt视图中里程碑pick动作按键的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于挂载
+渲染内容的dom节点$container
+@prop {Function} [renderGanttMilestoneActionUpdate = null] - 0.2.0新增
+gantt视图中里程碑update动作按键的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于
+挂载渲染内容的dom节点$container
+@prop {Function} [renderGanttMilestoneActionDestroy = null] - 0.2.0新增
+gantt视图中里程碑destroy动作按键的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于
+挂载渲染内容的dom节点$container
+@prop {Function} [renderGanttMilestoneLinkActions = null] - 0.2.0新增
+gantt视图中任务删除前置任务动作按键的自定义渲染函数，传入两个参数，当前任务实例milestone和用于
+挂载渲染内容的dom节点$container
+
+@prop {boolean} [renderTable = true] - 是否渲染组件table视图
+@prop {Array} [tableColumns = [{prop: 'actions', render: null},
+{prop: 'wbs', render: null}, {prop: 'type', render: null},
+{prop: 'name', render: null}, {prop: 'beginning', render: null},
+{prop: 'end', render: null}, {prop: 'duration', render: null},
+{prop: 'predecessors', render: null}, {prop: 'successors', render: null}] -
+table视图列配置，支持扩展自定义属性。 prop为要显示的任务属性。如果不设置title，则默认使用该prop
+在locale配置中的值作为table的表头标题，否则使用title的值作为table表头标题。如果render为
+Function，则使用该render渲染table中每个任务对应属性列，render中会传入两个参数，当前任务实例
+task和该实例当前要显示的属性在table列中的dom节点$container。
+@prop {Function} [renderTableTaskActions = null] - 0.2.0新增
+table视图中任务动作的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容的dom
+节点$container。
+权重低于tableColumns中action列render。
+@prop {Function} [renderTableTaskActionPick = null] - 0.2.0新增
+table视图中任务pick动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容的
+dom节点$container
+@prop {Function} [renderTableTaskActionFold = null] - 0.2.0新增
+table视图中任务fold动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容的
+dom节点$container
+@prop {Function} [renderTableTaskActionUpdate = null] - 0.2.0新增
+table视图中任务update动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容
+的dom节点$container
+@prop {Function} [renderTableTaskActionDestroy = null] - 0.2.0新增
+table视图中任务destroy动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容
+的dom节点$container
+@prop {Function} [renderTableTaskActionCreateTask = null] - 0.2.0新增
+table视图中任务createTask动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染
+内容的dom节点$container
+@prop {Function} [renderTableTaskActionCreateMilestone = null] - 0.2.0新增
+table视图中任务createMilestone动作按键的自定义渲染函数，传入两个参数，当前任务实例task和用于
+挂载渲染内容的dom节点$container
+@prop {Function} [renderTableMilestoneActions = null] - 0.2.0新增
+table视图中里程碑动作的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于挂载渲染内容
+的dom节点$container。
+权重低于tableColumns中action列render。
+@prop {Function} [renderTableMilestoneActionPick = null] - 0.2.0新增
+table视图中里程碑pick动作按键的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于挂载
+渲染内容的dom节点$container
+@prop {Function} [renderTableMilestoneActionUpdate = null] - 0.2.0新增
+table视图中里程碑update动作按键的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于
+挂载渲染内容的dom节点$container
+@prop {Function} [renderTableMilestoneActionDestroy = null] - 0.2.0新增
+table视图中里程碑destroy动作按键的自定义渲染函数，传入两个参数，当前里程碑实例milestone和用于
+挂载渲染内容的dom节点$container
+
+@prop {Array} [formFields = [
+{prop: 'wbs', type: 'text', placeholder: 'E.g., 1.1', render: null},
+{prop: 'name', type: 'text', placeholder: 'E.g., A New Task', render: null},
+{prop: 'beginning', type: 'time', placeholder: 'E.g., 2020/01/01', render: null},
+{prop: 'end', type: 'time', placeholder: 'E.g., 2020/01/02', render: null},
+{prop: 'predecessors', render: null, fields:[
+  {prop: 'predecessors.startToStart', type: 'select', multiple: true,
+   options: [], placeholder: 'E.g., 1, 2', render: null},
+  {prop: 'predecessors.startToFinish', type: 'select', multiple: true,
+   options: [], placeholder: 'E.g., 3, 4', render: null},
+  {prop: 'predecessors.finishToFinish', type: 'select', multiple: true,
+   options: [], placeholder: 'E.g., 5, 6', render: null},
+  {prop: 'predecessors.finishToStart', type: 'select', multiple: true,
+   options: [], placeholder: 'E.g., 7, 8', render: null}
+]},
+{prop: 'successors', render: null, fields: [
+  {prop: 'successors.startToStart', type: 'select', multiple: true,
+   options: [], placeholder: 'E.g., 1, 2', render: null},
+  {prop: 'successors.startToFinish', type: 'select', multiple: true,
+   options: [], placeholder: 'E.g., 3, 4', render: null},
+  {prop: 'successors.finishToFinish', type: 'select', multiple: true,
+   options: [], placeholder: 'E.g., 5, 6', render: null},
+  {prop: 'successors.finishToStart', type: 'select', multiple: true,
+   options: [], placeholder: 'E.g., 7, 8', render: null}
+]}
+]] - 0.2.0新增 任务/里程碑编辑表单field配置，支持扩展自定义属性。
+支持text、number、select、textarea、time类型的field，如果不设置type，默认使用text类型。
+对于select型field，options支持数组和函数两种形式，如果为数组，要求每个数组元素均为Object型，
+且具备label和value两个字段;如果为函数，该函数会接收到一个use函数作为参数，在此use函数中须传入一
+个Array，且每个元素均为具备label和value两个字段的Object;对于内置属性predecessors和successors
+如果options为空数组，会自动计算填充。如指定了自定义渲染函数render来渲染复杂的表单field，该函数会
+被传入两个参数，当前任务实例task和用于挂载渲染内容的dom节点$container。如果设置了label，则使用
+此label作为该field的表单标题，否则使用该prop在locale配置中的值作为table的表头标题。prop的设置
+支持属性嵌套，可以使用.作为分割符隔开。如果一个field设置了fields，会进行嵌套渲染。
+@prop {Function} [renderTaskForm] - 0.2.0新增
+任务编辑表单自定义渲染函数，传入三个参数，分别为当前任务实例task、表单容器dom节点$container，
+以及closeForm函数（调用时会关闭表单弹出层）
+@prop {Function} [renderMilestoneForm] - 0.2.0新增
+里程碑编辑表单自定义渲染函数，传入三个参数，分别为当前里程碑实例milestone、表单容器dom节点
+$container，以及closeForm函数（调用时会关闭表单弹出层）
+
+@prop {Object} [locale = {
+header: {
+  actions: {undo: 'Undo', redo: 'Redo'},
+  navigations: {
+    zoomIn: 'Zoom In', zoomOut: 'Zoom Out',
+    chartView: 'Chart View', tableView: 'Table View',
+    zoomUnits: {year: 'Year', month: 'Month', week: 'Week', day: 'Day', hour: 'Hour'}
+  }
+},
+task: {
+  types: {task: 'Task', milestone: 'Milestone'},
+  actions: {
+    createTask: 'New Task',
+    createMilestone: 'New Milestone',
+    destroyDescendants: 'Destroy Items',
+    createSubTask: 'Create a sub task',
+    createSubMilestone: 'Create a sub milestone',
+    updateTask: 'Edit this task',
+    updateMilestone: 'Edit this milestone',
+    destroyTask: 'Destroy this task',
+    destroyMilestone: 'Destroy this milestone',
+    pick: 'Pick this item',
+    unpick: 'Unpick this item',
+    fold: 'Fold descendants',
+    unfold: 'Unfold descendants'
+  },
+  props: {
+    wbs: 'Wbs',
+    name: 'Name',
+    type: 'Type',
+    beginning: 'Beginning',
+    end: 'End',
+    time: 'Time',
+    duration: 'Duration',
+    actions: 'Actions',
+    readonlyProps: 'Readonly Properties',
+    predecessors: {
+      $: 'Predecessors',
+      startToStart: 'Start to Start',
+      startToFinish: 'Start to Finish',
+      finishToFinish: 'Finish to Finish',
+      finishToStart: 'Finish to Start'
+    },
+    successors: {
+      $: 'Successors',
+      startToStart: 'Start to Start',
+      startToFinish: 'Start to Finish',
+      finishToFinish: 'Finish to Finish',
+      finishToStart: 'Finish to Start'
+    }
+  },
+  durationUnits: {
+    year: 'years',
+    month: 'months',
+    week: 'weeks',
+    day: 'days',
+    hour: 'hours'
+  }
+}
+}] - 0.2.0新增 本地化语言设置，支持扩展自定义字段。$可以用于嵌套字段中来标识本级locale设置。
+</code></pre></div> <h2>构造函数</h2> <h3>kickoff (config, tasks)</h3> <div class=highlight><pre class="code plaintext"><code>@param {KickoffInstanceConfig} config
+@param {TaskInstanceData[]} [tasks]
+@returns {KickoffInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="c1">// @example 创建Kickoff组件实例，挂载于满足css选择器#my-kickoff的dom节点上</span>
+<span class="kd">let</span> <span class="nx">myKickoff</span> <span class="o">=</span> <span class="nx">kickoff</span><span class="p">({</span>
+  <span class="na">target</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#my-kickoff</span><span class="dl">'</span>
+<span class="p">},</span> <span class="p">[{</span>
+  <span class="na">wbs</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">beginning</span><span class="p">:</span> <span class="dl">'</span><span class="s1">2020-09-19 00:00:00</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">end</span><span class="p">:</span> <span class="dl">'</span><span class="s1">2020-09-22 23:59:59</span><span class="dl">'</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="na">wbs</span><span class="p">:</span> <span class="dl">'</span><span class="s1">2</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">beginning</span><span class="p">:</span> <span class="dl">'</span><span class="s1">2020-09-23 00:00:00</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">end</span><span class="p">:</span> <span class="dl">'</span><span class="s1">2020-09-30 23:59:59</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">dependencies</span><span class="p">:</span> <span class="p">{</span><span class="na">startToStart</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1.1</span><span class="dl">'</span><span class="p">}</span>
+<span class="p">},</span> <span class="p">{</span>
+  <span class="na">wbs</span><span class="p">:</span> <span class="dl">'</span><span class="s1">1.1</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">beginning</span><span class="p">:</span> <span class="dl">'</span><span class="s1">2020-09-19 00:00:00</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">end</span><span class="p">:</span> <span class="dl">'</span><span class="s1">2020-09-21 23:59:59</span><span class="dl">'</span>
+<span class="p">}])</span>
+</code></pre></div> <h2>静态方法</h2> <h3>kickoff.time</h3> <p>详见 <a href="/kickoff/docs/api_time/">Time</a> API</p> <h2>实例方法</h2> <h3>.configure (config)</h3> <div class=highlight><pre class="code plaintext"><code>@param {KickoffInstanceConfig} config
+@returns {KickoffInstance}
+</code></pre></div> <p><strong>重新配置KickoffInstance而不是在构造函数中直接传入配置参数会引起一次组件重新渲染。</strong></p> <div class=highlight><pre class="code javascript"><code><span class="kd">let</span> <span class="nx">myKickoff</span> <span class="o">=</span> <span class="nx">kickoff</span><span class="p">({</span><span class="na">target</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#my-kickoff</span><span class="dl">'</span><span class="p">})</span>
+<span class="c1">// @example 重新配置KickoffInstance不渲染table视图</span>
+<span class="nx">myKickoff</span><span class="p">.</span><span class="nx">configure</span><span class="p">({</span><span class="na">renderTable</span><span class="p">:</span> <span class="kc">false</span><span class="p">})</span>
+</code></pre></div> <h3>.destroy ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {boolean}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="kd">let</span> <span class="nx">myKickoff</span> <span class="o">=</span> <span class="nx">kickoff</span><span class="p">({</span><span class="na">target</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#my-kickoff</span><span class="dl">'</span><span class="p">})</span>
+<span class="c1">// @example 销毁KickoffInstance并将挂载节点内部HTML清除</span>
+<span class="nx">myKickoff</span><span class="p">.</span><span class="nx">destroy</span><span class="p">()</span>
+</code></pre></div> <h3>.render ( )</h3> <div class=highlight><pre class="code plaintext"><code>@returns {KickoffInstance}
+</code></pre></div> <div class=highlight><pre class="code javascript"><code><span class="kd">let</span> <span class="nx">myKickoff</span> <span class="o">=</span> <span class="nx">kickoff</span><span class="p">({</span><span class="na">target</span><span class="p">:</span> <span class="dl">'</span><span class="s1">#my-kickoff</span><span class="dl">'</span><span class="p">})</span>
+<span class="c1">// @example 重新渲染KickoffInstance</span>
+<span class="nx">myKickoff</span><span class="p">.</span><span class="nx">render</span><span class="p">()</span>
+</code></pre></div> </article> </div> </main> <footer class="rel zi-high px-large py-medium d-flex jc-between"> <p class="p7 mr-small c-light"> <span class=o-muted>Designed and built by</span> <a href="https://github.com/oatw" class="link-light fw-semibold">Oatw</a>, <span class=o-muted>Code licensed</span> <a href="https://github.com/oatw/kickoff/blob/master/LICENSE" class="link-light fw-semibold">MIT</a>. </p> <p class="p7 c-light"> <a href="https://github.com/oatw/kickoff/blob/master/CONTRIBUTING.md" class="link-light px-tiny td-none">Contributing</a> <span class=o-main>|</span> <a href="https://github.com/oatw/kickoff/issues/new?assignees=oatw&amp;labels=enhancement&amp;template=FEATURE_REQUEST.md" class="link-light px-tiny td-none">Feature Request</a> <span class=o-main>|</span> <a href="https://github.com/oatw/kickoff/issues/new?assignees=oatw&amp;labels=bug&amp;template=BUG_REPORT.md" class="link-light px-tiny td-none">Bug Report</a> </p> </footer> </body> </html>

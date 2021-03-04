@@ -1,0 +1,40 @@
+<!doctype html>
+<html class="bc-primary" lang="zh-cmn-Hans">
+  <head>
+    <meta charset="UTF-8">
+    <title>Kickoff - 可能是东北三省最灵活易用的任务管理组件</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="kickoff">
+    <meta name="mobile-web-app-capable" content="kickoff">
+    <meta name="application-name" content="kickoff">
+    <meta content="telephone=no" name="format-detection">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="author" content="">
+    <meta name="keywords" content="kickoff">
+    <meta name="description" content="kickoff">
+    <link rel="shortcut icon" href="<%= asset_url('favicon.ico') %>">
+    <script src="https://unpkg.com/turbolinks@5.2.0/dist/turbolinks.js"></script>
+    <%= javascript_include_tag 'browser_detect', 'data-turbolinks-track': 'reload' %>
+    <script src="https://unpkg.com/luda@0.3.3/dist/js/luda-degradation.min.js" data-turbolinks-track="reload"></script>
+    <link href="https://unpkg.com/luda@0.3.3/dist/css/luda-default.min.css" rel="stylesheet" data-turbolinks-track="reload">
+    <% kickoff_path = config[:environment] == :development ? 'kickoff/kickoff' : 'kickoff/kickoff.min' %>
+    <%= stylesheet_link_tag kickoff_path, 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'site', 'data-turbolinks-track': 'reload' %>
+    <script src="https://unpkg.com/luda@0.3.3/dist/js/luda.min.js" data-turbolinks-track="reload"></script>
+    <%= javascript_include_tag kickoff_path, 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'site', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body class="d-flex fd-column jc-between b-primary">
+
+    <%= partial "partials/header" %>
+    <main id="main" class="rel zi-high">
+      <%= yield %>
+    </main>
+    <%= partial "partials/footer" %>
+
+  </body>
+</html>

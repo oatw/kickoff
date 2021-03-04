@@ -1,0 +1,44 @@
+.kickoff-gantt-links
+  position: relative
+  width: 0
+  height: 0
+  overflow: visible
+  pointer-events: none
+
+.kickoff-gantt-link
+  position: absolute
+  top: 0
+  left: 0
+  width: 0
+  height: 0
+  overflow: visible
+
+.kickoff-gantt-link-line
+  position: absolute
+  top: 0
+  left: 0
+  // width: 1px
+  // height: 1px
+  overflow: visible !important
+  fill: $kickoff-gantt-link-line-color
+  stroke: $kickoff-gantt-link-line-color
+  stroke-width: 1
+
+.kickoff-gantt-link-line.is-hidden
+  display: none
+
+.kickoff-gantt-link-preview-line
+  display: none
+  position: absolute
+  top: 0
+  left: 0
+  // width: 1px
+  // height: 1px
+  overflow: visible !important
+  fill: $kickoff-gantt-link-preview-line-color
+  stroke: $kickoff-gantt-link-preview-line-color
+  stroke-dasharray: 5, 5
+  stroke-width: 1
+
+.kickoff-gantt-link-preview-line.is-previewing
+  display: block

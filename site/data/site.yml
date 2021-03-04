@@ -1,0 +1,70 @@
+menu:
+-
+  title: 开始
+  items:
+  -
+    label: 简介
+    uri: /docs/general.html
+  -
+    label: 安装
+    uri: /docs/installation.html
+  -
+    label: 兼容性
+    uri: /docs/browser_support.html
+-
+  title: 教程
+  items:
+  -
+    label: 入门
+    uri: /docs/tutorial_introduction.html
+  -
+    label: 配置
+    uri: /docs/tutorial_config.html
+  -
+    label: 事件
+    uri: /docs/tutorial_event.html
+  -
+    label: 主题
+    uri: /docs/tutorial_theming.html
+  -
+    label: 特殊日期
+    uri: /docs/tutorial_special_date.html
+  -
+    label: 时间线旗标
+    uri: /docs/tutorial_flag.html
+  -
+    label: 任务动作与只读属性
+    uri: /docs/tutorial_action_readonly.html
+  -
+    label: 自定义动作
+    uri: /docs/tutorial_custom_action.html
+  -
+    label: 自定义属性
+    uri: /docs/tutorial_custom_prop.html
+  -
+    label: 模型校验
+    uri: /docs/tutorial_validate.html
+  -
+    label: 自定义渲染
+    uri: /docs/tutorial_render.html
+  -
+    label: 表单渲染
+    uri: /docs/tutorial_form.html
+  -
+    label: 多语言
+    uri: /docs/tutorial_locale.html
+-
+  title: API
+  items:
+  -
+    label: Kickoff
+    uri: /docs/api_kickoff.html
+  -
+    label: Task
+    uri: /docs/api_task.html
+  -
+    label: Time
+    uri: /docs/api_time.html
+  -
+    label: Timeline
+    uri: /docs/api_timeline.html

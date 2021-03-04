@@ -1,0 +1,178 @@
+.kickoff-gantt-tasks
+  position: relative
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+
+.kickoff-gantt-task
+  height: $kickoff-gantt-task-height
+  padding: $kickoff-gantt-task-padding-y 0
+  box-shadow: 0 1px 0 $kickoff-border-color
+
+.kickoff-gantt-task.is-hidden
+  display: none
+
+.kickoff-gantt-task.is-picked
+  background: $kickoff-gantt-task-picked-background
+
+.kickoff-gantt-task-content
+  position: relative
+  height: 100%
+
+.kickoff-gantt-task-label
+  display: flex
+  position: absolute
+  top: 0
+  right: 100%
+  align-items: center
+  height: 100%
+  padding: 0 $kickoff-gantt-task-label-padding-x
+  font-size: $kickoff-gantt-task-label-font-size
+  line-height: 1
+  white-space: nowrap
+  color: $kickoff-gantt-task-label-color
+  font-weight: 700
+
+.kickoff-gantt-task-bar
+  display: flex
+  // position: relative
+  // z-index: 1
+  height: 100%
+  overflow: hidden
+  border-radius: $kickoff-border-radius
+
+.kickoff-gantt-task-bar-body
+  position: relative
+  flex: 0 0 100%
+  overflow: hidden
+  cursor: grab
+  background: $kickoff-gantt-task-bar-background
+
+.kickoff-gantt-task-bar-body:active
+  cursor: grabbing
+
+.kickoff-gantt-task-bar-body.is-readonly
+  cursor: default
+  background: $kickoff-gantt-disabled-task-bar-background
+
+.kickoff-gantt-task.is-folded .kickoff-gantt-task-bar-body
+  background: $kickoff-gantt-folded-task-bar-background
+
+.kickoff-gantt-task.is-folded .kickoff-gantt-task-bar-body.is-readonly
+  background: $kickoff-gantt-disabled-folded-task-bar-background
+
+.kickoff-gantt-task-bar-beginning,
+.kickoff-gantt-task-bar-end
+  position: relative
+  z-index: 1
+  flex: 0 0 $kickoff-gantt-task-bar-ends-width
+  cursor: ew-resize
+  background: $kickoff-gantt-task-bar-ends-background
+
+.kickoff-gantt-task-bar-beginning
+  margin-right: - $kickoff-gantt-task-bar-ends-width
+
+.kickoff-gantt-task-bar-end
+  margin-left: - $kickoff-gantt-task-bar-ends-width
+
+.kickoff-gantt-task.is-milestone .kickoff-gantt-task-bar-body
+  background: $kickoff-gantt-milestone-diamond-background
+  transform: rotate(45deg) scale(0.707106781186545)
+
+.kickoff-gantt-task.is-milestone .kickoff-gantt-task-bar-body.is-readonly
+  background: $kickoff-gantt-disabled-milestone-diamond-background
+
+.kickoff-gantt-task.is-milestone .kickoff-gantt-task-bar-beginning,
+.kickoff-gantt-task.is-milestone .kickoff-gantt-task-bar-end
+  display: none
+
+.kickoff-gantt-task-links
+  display: none
+  position: absolute
+  top: 0
+  bottom: 0
+  left: - $kickoff-gantt-task-links-point-size * 1.5
+  align-items: center
+  justify-content: space-between
+  width: calc(100% + #{$kickoff-gantt-task-links-point-size * 3})
+  height: 0
+  margin: auto
+
+.kickoff-gantt-task:hover .kickoff-gantt-task-links,
+.kickoff-gantt-task-links.is-linking
+  display: flex
+
+.kickoff-gantt-task-links-beginning,
+.kickoff-gantt-task-links-end
+  width: $kickoff-gantt-task-links-point-size
+  height: $kickoff-gantt-task-links-point-size
+  border: solid $kickoff-gantt-task-links-point-border-width $kickoff-gantt-task-links-point-border-color
+  cursor: pointer
+  background: $kickoff-gantt-task-links-point-background
+  border-radius: 100%
+
+.kickoff-gantt-task-links-beginning.is-linking,
+.kickoff-gantt-task-links-end.is-linking
+  transform: scale($kickoff-gantt-task-links-point-is-linking-scale-ratio)
+
+.kickoff-gantt-task-links-beginning.is-invalid,
+.kickoff-gantt-task-links-end.is-invalid
+  cursor: not-allowed
+  border-color: $kickoff-gantt-task-links-invalid-point-border-color
+
+.kickoff-gantt-task-popover
+  max-width: $kickoff-gantt-task-popover-max-width
+  min-width: $kickoff-gantt-task-popover-min-width
+  color: $kickoff-gantt-task-popover-color
+
+.kickoff-gantt-task-popover-actions,
+.kickoff-gantt-task-popover-link-actions
+  display: flex
+  flex-wrap: wrap
+  border-radius: $kickoff-border-radius
+  border-bottom-right-radius: 0
+  border-bottom-left-radius: 0
+  box-shadow: $kickoff-gantt-task-popover-box-shadow
+
+.kickoff-gantt-task-popover-actions
+  padding: $kickoff-gantt-task-popover-actions-padding
+  background: $kickoff-gantt-task-popover-actions-background
+
+.kickoff-gantt-task-popover-actions [class *= kickoff-button-]
+  margin: $kickoff-gantt-task-popover-actions-button-margin
+
+.kickoff-gantt-task-popover-link-actions
+  padding: $kickoff-gantt-task-popover-link-actions-padding
+  background: $kickoff-gantt-task-popover-link-actions-background
+
+.kickoff-gantt-task-popover-actions ~ .kickoff-gantt-task-popover-link-actions
+  border-radius: 0
+
+.kickoff-gantt-task-popover-link-actions [class *= kickoff-button-]
+  margin: $kickoff-gantt-task-popover-link-actions-button-margin
+
+.kickoff-gantt-task-popover-summary
+  padding: $kickoff-gantt-task-popover-summary-padding
+  background: $kickoff-gantt-task-popover-summary-background
+  border-radius: $kickoff-border-radius
+  box-shadow: $kickoff-gantt-task-popover-box-shadow
+
+.kickoff-gantt-task-popover-actions ~ .kickoff-gantt-task-popover-summary,
+.kickoff-gantt-task-popover-link-actions ~ .kickoff-gantt-task-popover-summar
+  border-top-right-radius: 0
+  border-top-left-radius: 0
+
+.kickoff-gantt-task-popover-summary-title,
+.kickoff-gantt-task-popover-summary-item
+  display: flex
+  justify-content: space-between
+  font-size: $kickoff-gantt-task-popover-font-size
+  line-height: $kickoff-gantt-task-popover-line-height
+  overflow: hidden
+
+.kickoff-gantt-task-popover-summary-item
+  white-space: nowrap
+
+.kickoff-gantt-task-popover-summary-title
+  font-weight: 700

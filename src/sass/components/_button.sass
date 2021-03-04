@@ -1,0 +1,139 @@
+.kickoff-button,
+[class *= kickoff-button-]
+  -webkit-appearance: none
+  -moz-appearance: none
+  appearance: none
+  display: inline-block
+  vertical-align: top
+  flex: 0 0 auto
+  min-width: $kickoff-button-height
+  height: $kickoff-button-height
+  padding: $kickoff-button-padding
+  border: none
+  font-size: $kickoff-button-font-size
+  line-height: 1
+  white-space: nowrap
+  text-align: center
+  cursor: pointer
+  -ms-touch-action: manipulation
+  touch-action: manipulation
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  font-weight: $kickoff-button-font-weight
+  text-decoration: none
+  background: none
+  border-radius: $kickoff-border-radius
+  box-shadow: $kickoff-button-box-shadow
+
+.kickoff-button:focus,
+[class *= kickoff-button-]:focus
+  outline: none
+
+.kickoff-button[disabled],
+[class *= kickoff-button-][disabled]
+  color: $kickoff-button-disabled-color
+  background: $kickoff-button-disabled-background
+
+.kickoff-button-fold-task
+  color: $kickoff-button-fold-task-color
+  background: $kickoff-button-fold-task-background
+
+.kickoff-button-fold-task.is-folded
+  color: $kickoff-button-fold-task-folded-color
+  background: $kickoff-button-fold-task-folded-background
+
+.kickoff-button-fold-task.is-hidden
+  display: none
+
+.kickoff-button-pick-task
+  color: $kickoff-button-pick-task-color
+  background: $kickoff-button-pick-task-background
+
+.kickoff-button-pick-task.is-picked
+  color: $kickoff-button-pick-task-picked-color
+  background: $kickoff-button-pick-task-picked-background
+
+.kickoff-button-create-task
+  color: $kickoff-button-create-task-color
+  background: $kickoff-button-create-task-background
+
+.kickoff-button-create-milestone
+  color: $kickoff-button-create-milestone-color
+  background: $kickoff-button-create-milestone-background
+
+.kickoff-button-edit-task
+  color: $kickoff-button-edit-task-color
+  background: $kickoff-button-edit-task-background
+
+.kickoff-button-destroy-task
+  color: $kickoff-button-destroy-task-color
+  background: $kickoff-button-destroy-task-background
+
+.kickoff-button-destroy-link
+  color: $kickoff-button-destroy-link-color
+  font-weight: 700
+  text-transform: uppercase
+  background: $kickoff-button-destroy-link-background
+
+.kickoff-buttons,
+[class *= kickoff-buttons-]
+  display: inline-flex
+  align-items: center
+  overflow: hidden
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  border-radius: $kickoff-border-radius
+  box-shadow: $kickoff-buttons-box-shadow
+
+.kickoff-buttons > *,
+[class *= kickoff-buttons-] > *
+  border-right: solid 1px $kickoff-border-color
+  white-space: nowrap
+  -webkit-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  border-radius: 0
+  box-shadow: none
+
+.kickoff-buttons > *[disabled],
+[class *= kickoff-buttons-] > *[disabled]
+  border-color: $kickoff-disabled-border-color
+
+.kickoff-buttons > *:last-child,
+[class *= kickoff-buttons-] > *:last-child
+  border-right: none
+
+.kickoff-buttons-state-switch
+  color: $kickoff-buttons-state-switch-color
+
+.kickoff-button-state-undo,
+.kickoff-button-state-redo
+  background: $kickoff-buttons-state-switch-background
+
+.kickoff-buttons-unit-zoom
+  color: $kickoff-buttons-unit-zoom-color
+
+.kickoff-button-unit-zoom-in,
+.kickoff-button-unit-zoom-out
+  background: $kickoff-buttons-unit-zoom-background
+
+.kickoff-buttons-unit-zoom-current
+  display: flex
+  align-items: center
+  justify-content: center
+  width: $kickoff-buttons-unit-zoom-current-width
+  padding: $kickoff-button-padding
+  font-size: $kickoff-button-font-size
+  font-weight: $kickoff-button-font-weight
+  text-transform: capitalize
+
+.kickoff-buttons-view-switch
+  color: $kickoff-buttons-view-switch-color
+
+.kickoff-button-view-gantt,
+.kickoff-button-view-table
+  background: $kickoff-buttons-view-switch-background

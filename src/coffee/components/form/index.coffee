@@ -1,0 +1,6 @@
+import './form.coffee'
+import './number.coffee'
+import './select.coffee'
+import './text.coffee'
+import './textarea.coffee'
+import './time.coffee'

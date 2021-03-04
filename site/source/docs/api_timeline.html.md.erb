@@ -1,0 +1,291 @@
+# API - Timeline
+
+## 数据结构
+
+```plaintext
+@typedef {Object} TimelineInstance - 时间线模型实例
+@prop {integer} uid - 唯一id，自动生成
+```
+
+```plaintext
+@typedef {TimelineFlag} - 0.2.0新增 时间线重要时间标记对象
+@prop {TimeInstance | Date | string} time - 标记时间。如为字符串，格式须为
+yyyy-mm-dd HH:MM:SS
+@prop {string} [label = 'FLAG'] - 标记名称
+@prop {string} [cls] - 自定义CSS类名称
+```
+
+## 内置事件
+
+<div class="table-border table-nowrap">
+  <table>
+    <thead>
+      <tr>
+        <th>事件名称</th>
+        <th>event.target</th>
+        <th>是否冒泡</th>
+        <th>触发时机</th>
+        <th>携带数据</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>after-create</td>
+        <td>TimelineInstance</td>
+        <td>不适用</td>
+        <td>时间线实例创建完成</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td>after-touch</td>
+        <td>TimelineInstance</td>
+        <td>不适用</td>
+        <td>时间线实例执行写操作完成</td>
+        <td>{property: {newVal: newValue, oldVal: oldValue}}</td>
+      </tr>
+      <tr>
+        <td>after-update</td>
+        <td>TimelineInstance</td>
+        <td>不适用</td>
+        <td>时间线实例执行写操作完成且值改变</td>
+        <td>{property: {newVal: newValue, oldVal: oldValue}}</td>
+      </tr>
+      <tr>
+        <td>after-render</td>
+        <td>TimelineInstance</td>
+        <td>不适用</td>
+        <td>时间线实例在gantt视图中渲染完成</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+## 实例方法
+
+### .avaliableUnits ( )
+
+```plaintext
+@returns {Array} - 返回所有可切换的单位
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 返回所有可切换的单位
+myKickoff.timeline.avaliableUnits()
+```
+
+### .beginning (time)
+
+```plaintext
+@param {TimeInstance | Date | string} [time] - 需要设置的开始时间。如传入字符串，格式须
+为yyyy-mm-dd HH:MM:SS
+@returns {TimeInstance | TimelineInstance} - 如传入time，则设置当前TimelineInstance
+的开始时间，并返回当前TimelineInstance，否则返回以当前TimelineInstance开始时间构建的
+TimeInstance
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 获取当前TimelineInstance的开始时间构建的TimeInstance
+myKickoff.timeline.beginning()
+// @example 设置的当前TimelineInstance的开始时间
+myKickoff.timeline.beginning('2020-10-01')
+```
+
+### .days ( )
+
+```plaintext
+@returns {TimeRange[]} - 返回以天为粒度拆分的当前TimelineInstance周期构建的TimeRange数组
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 获取以天为粒度拆分的当前TimelineInstance周期构建的TimeRange数组
+myKickoff.timeline.days()
+```
+
+### .duration (seconds)
+
+```plaintext
+@param {integer} [seconds] - 需要设置的总时长秒数
+@returns {TimeDuration | TimelineInstance} - 如传入seconds，则设置当前实例的周期，并
+返回当前TimelineInstance，否则返回一个通过计算当前TimelineInstance周期构建的TimeDuration
+对象
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 获取当前TimelineInstance的周期
+myKickoff.timeline.duration()
+// @example 设置的当前TimelineInstance的周期为 3600 * 24 秒
+myKickoff.timeline.duration(3600 * 24)
+```
+
+### .end (time)
+
+```plaintext
+@param {TimeInstance | Date | string} [time] - 需要设置的结束时间。如传入字符串，格式须
+为yyyy-mm-dd HH:MM:SS
+@returns {TimeInstance | TimelineInstance} - 如传入time，则设置当前TimelineInstance
+的开始时间，并返回当前TimelineInstance，否则返回以当前TimelineInstance结束时间构建的
+TimeInstance
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 获取当前TimelineInstance的结束时间构建的TimeInstance
+myKickoff.timeline.end()
+// @example 设置的当前TimelineInstance的结束时间
+myKickoff.timeline.end('2020-10-01')
+```
+
+### .fit (beginning, end, mode)
+
+```plaintext
+@param {TimeInstance | Date | string} beginning - 期望开始时间。如传入字符串，格式须
+为yyyy-mm-dd HH:MM:SS
+@param {TimeInstance | Date | string} end - 期望结束时间。如传入字符串，格式须
+为yyyy-mm-dd HH:MM:SS
+@param {string} [mode = both] - 计算模式。both, grow, shrink可选。如为grow，则只有当
+传入的beginning早于时间线当前开始时间或传入的end晚于时间线当前结束时间时进行调整。如果为shrink，
+则调整规则与grow相反。如果为both，则不进行比较计算，直接以传入的beginning和end尝试对时间线周期
+进行调整。
+@returns {boolean} - 返回当前时间线是否进行了调整的布尔值
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 尝试将当前时间线周期调整为 2020-10-01 至 2020-12-31
+myKickoff.timeline.fit('2020-10-01', '2020-12-31')
+```
+
+### .hours ( )
+
+```plaintext
+@returns {TimeRange[]} - 返回以小时为粒度拆分的当前时间线周期构建的TimeRange数组
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 获取以小时为粒度拆分的当前TimelineInstance周期构建的TimeRange数组
+myKickoff.timeline.hours()
+```
+
+### .months ( )
+
+```plaintext
+@returns {TimeRange[]} - 返回以月为粒度拆分的当前TimelineInstance周期构建的TimeRange数组
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 获取以月为粒度拆分的当前TimelineInstance周期构建的TimeRange数组
+myKickoff.timeline.months()
+```
+
+### .off (event, callback)
+
+```plaintext
+@param {string} event - 事件名称及命名空间，格式为name.ns1.ns2，可以没有命名空间
+@params {Function} [callback] - 绑定事件时的回调函数，如不传递，则解绑定该时间下所有监听
+@returns {TimelineInstance}
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+myKickoff.timeline.on('after-update.my-namespace', function(event, udpated){
+  console.log(event.target, updated)
+})
+// @example 解除TimelineInstance上的在my-namespace命名空间下的after-update事件监听
+myKickoff.timeline.off('after-update.my-namespace')
+```
+
+### .on (event, callback)
+
+```plaintext
+@param {string} event - 事件名称及命名空间，格式为name.ns1.ns2，可以没有命名空间
+@params {Function} callback - 事件触发时的回调函数
+@returns {TimelineInstance}
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 向TimelineInstance添加在my-namespace命名空间下的after-update事件监听，当其
+// 执行更新操作后事件会被触发并执行回调函数
+myKickoff.timeline.on('after-update.my-namespace', function(event, udpated){
+  console.log(event.target, updated)
+})
+```
+
+### .one (event, callback)
+
+```plaintext
+@param {string} event - 事件名称及命名空间，格式为name.ns1.ns2，可以没有命名空间
+@params {Function} callback - 事件触发时的回调函数
+@returns {TimelineInstance}
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 向TimelineInstance添加在my-namespace命名空间下的after-update事件监听，当其
+// 执行更新操作后事件会被触发并执行回调函数，但只会被出发并执行一次
+myKickoff.timeline.one('after-update.my-namespace', function(event, udpated){
+  console.log(event.target, updated)
+})
+```
+
+### .trigger (event, detail)
+
+```plaintext
+@param {string} event - 事件名称
+@params {*} detail - 事件需要携带的数据
+@returns {TimelineInstance}
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 在当前TimelineInstance上触发一个自定义事件，监听过此事件的回调会依次执行，且会在
+// 回调函数的第二个参数位置收到触发时携带的数据
+myKickoff.timeline.trigger('my-custom-event', {foo: 'bar'})
+```
+
+### .unit (unit)
+
+```plaintext
+@param {string} [unit] - 需要切换的时间单位，year, month, week, day, hour可选
+@returns {TimelineInstance | string} - 如传入unit则设置当前TimelineInstance单位，并返
+回当前TimelineInstance，否则返回当前TimelineInstance当前单位
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 获取当前时间线单位
+myKickoff.timeline.unit()
+// @example 设置当前时间线单位为年
+myKickoff.timeline.unit('year')
+```
+
+### .weeks ( )
+
+```plaintext
+@returns {TimeRange[]} - 返回以周为粒度拆分的当前TimelineInstance周期构建的TimeRange数组
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 获取以周为粒度拆分的当前TimelineInstance周期构建的TimeRange数组
+myKickoff.timeline.weeks()
+```
+
+### .years ( )
+
+```plaintext
+@returns {TimeRange[]} - 返回以年为粒度拆分的当前TimelineInstance周期构建的TimeRange数组
+```
+
+```javascript
+let myKickoff = kickoff({target: '#my-kickoff'})
+// @example 获取以年为粒度拆分的当前TimelineInstance周期构建的TimeRange数组
+myKickoff.timeline.years()
+```

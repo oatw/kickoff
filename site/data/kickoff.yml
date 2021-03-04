@@ -1,0 +1,11 @@
+---
+version: 0.2.4
+oatw: https://github.com/oatw
+repo: https://github.com/oatw/kickoff
+license: https://github.com/oatw/kickoff/blob/master/LICENSE
+changelog: https://github.com/oatw/kickoff/blob/master/CHANGELOG.md
+contributing: https://github.com/oatw/kickoff/blob/master/CONTRIBUTING.md
+feature_request: https://github.com/oatw/kickoff/issues/new?assignees=oatw&labels=enhancement&template=FEATURE_REQUEST.md
+bug_report: https://github.com/oatw/kickoff/issues/new?assignees=oatw&labels=bug&template=BUG_REPORT.md
+download: https://github.com/oatw/kickoff/raw/master/release
+demos: https://codepen.io/collection/DgqZqO

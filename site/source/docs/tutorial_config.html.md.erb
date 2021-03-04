@@ -1,0 +1,23 @@
+<!-- markdownlint-disable -->
+# 配置
+
+## 配置管理
+
+在使用Kickoff过程中，所有的配置都应集中通过`kickoff`构造函数，或其实例方法`configure`管理。
+在Kickoff实例化完成以后，可以通过实例的`config`属性访问到所有的配置项，
+这些配置项会按需同步到了不同的模型中。
+
+## 开始实践
+
+下面我们通过一个例子来了解如何通过修改默认配置来实现Kickoff的定制。
+
+在这个例子中，我们只渲染Kickoff的table视图，并且重新配置了table展示的列。
+在配置的列中，我们展示了自定义字段creator，并且对默认的开始结束时间格式使用自定义render进行了替换。
+点击下方demo的不同Tab页，可以切换查看代码及最终效果。
+
+<iframe height="460" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Configuring Table Columns" src="https://codepen.io/Kickoff/embed/vYKdaoM?height=460&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/vYKdaoM'>Kickoff Tutorial - Configuring Table Columns</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+关于配置的更多内容，请查看 <%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API。

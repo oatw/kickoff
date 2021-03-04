@@ -1,0 +1,23 @@
+.kickoff
+  overflow: overlay
+  -ms-overflow-style: -ms-autohiding-scrollbar
+
+.kickoff *
+  // sass-lint:disable no-misspelled-properties
+  scrollbar-width: thin
+  scrollbar-color: $kickoff-scrollbar-background
+  // sass-lint:enable no-misspelled-properties
+
+.kickoff ::-webkit-scrollbar
+  width: $kickoff-scrollbar-thickness
+  height: $kickoff-scrollbar-thickness
+
+.kickoff ::-webkit-scrollbar-thumb
+  background: $kickoff-scrollbar-background
+  border-radius: $kickoff-scrollbar-thickness
+
+.kickoff ::-webkit-scrollbar-corner
+  display: none
+
+.kickoff ::-webkit-resizer
+  display: none

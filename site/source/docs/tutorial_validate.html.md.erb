@@ -1,0 +1,52 @@
+<!-- markdownlint-disable -->
+# 模型校验
+
+Kickoff中对Task实例的数据合法性校验分为两种，一种是比较简单的单一实例在产生数据更新后进行校验，
+另一种是类似于数据库事务的多个实例产生更新后需要确保一致性和完整性的校验。
+后者多发于任务具有关联关系时，单一任务周期变化对关联任务周期变化的影响。
+
+Kickoff使用事件机制来处理这两种情况下的数据合法性校验，
+无论是单一任务模型校验还是事物型多任务模型校验，都可通过在`before-update`事件上添加监听来实现。
+结合Task模型的`.error()`方法，还可以对任务表单进行精确的错误信息提示。
+
+下面我们通过一个例子来了解一下Kickoff中对Task实例数据对象进行校验及错误信息处理的方式。
+
+## 开始实践
+
+在下面的例子中，由于First Task是Second Task的f2s型前置任务，
+因此，当First Task的结束时间更新为晚于Second Task的开始时间时，为了满足事务要求，
+Second Task的任务周期会自动进行调整。
+
+但是，我们在根任务`before-update`事件中添加了一个监听函数，
+在这个函数中校验了任务的结束时间不能晚于2020-11-08 23:59:59，
+如果晚于这个时间就向任务中添加错误信息并`alert`出来。所以情况究竟会如何呢？
+
+现在，你可以单独拖拽Second Task，或者拖拽First Task，
+使得Second Task的结束时间晚于2020-11-08 23:59:59，看看会发生什么？
+
+再通过点击First Task的编辑按键或Second Task的编辑按键，
+在弹出的表单中修改结束时间晚于2020-11-08 23:59:59，看看表单上的显示发生了什么变化？
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Validating Task Data" src="https://codepen.io/Kickoff/embed/OJRQPBa?height=600&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/OJRQPBa'>Kickoff Tutorial - Validating Task Data</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+对于上面的示例，在分别对不同任务执行了更新结束时间的操作后，你能区分出什么情况下执行的是单一模型校验，
+什么情况下执行了事物型多模型校验吗？
+
+在理解了上面的问题后，我们来注意代码中的一个地方，在对任务实例添加错误消息的时候，我们向
+`event.original.target` 的 `event.original.prop`添加了错误消息，
+这样做是因为对于一个事物型更新操作而言，引发更新的任务和属性与发生校验错误的任务和属性不一定是一样的。
+
+`event.original.target` 和 `event.original.prop` 代表的是引起当前事务的任务和属性，
+而`event.target`和`updated`中的属性是当前要被更新的任务和属性。对于这两个层面的区别要理解清楚。
+
+另外， `.error()`方法只控制UI视图错误信息的存储，并不对Task模型的更新动作产生影响，
+这种机制类似于 <%= link_to '任务动作与只读属性', find_route_uri('tutorial_action_readonly') %>
+中提到的任务`actions`和`readonlyProps`配置。
+
+最后需要说明的一点是，对于自定义属性的事物型更新，需要开发人员自行实现。
+
+关于Task事件和`.error()`方法的更多内容请查看
+<%= link_to 'Task', find_route_uri('api_task') %> API 事件部分。

@@ -1,0 +1,8 @@
+<% wrap_layout :layout do %>
+  <div id="doc" class="d-flex jc-between min-h-100vh bc-light">
+    <%= partial 'partials/doc_nav' %>
+    <article id="doc-article" class="article w-100 px-large pb-large">
+      <%= yield %>
+    </article>
+  </div>
+<% end %>

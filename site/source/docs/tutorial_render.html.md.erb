@@ -1,0 +1,24 @@
+<!-- markdownlint-disable -->
+# 自定义渲染
+
+Kickoff提供了大量的自定义渲染函数入口，大到整个任务表单的渲染，小到table视图中一个列标题的渲染，
+都可以通过自定义渲染函数实现定制。Kickoff中的所有自定义渲染函数都支持异步渲染，
+这意味着更高的灵活性和更便捷的开发体验。
+
+下面，我们通过定制gantt视图任务图形来感受一下Kickoff中自定义渲染函数的基本用法。
+
+## 开始实践
+
+我们通过编写自定义渲染函数`renderGanttTaskGraph`来对gantt视图中的任务图形进行了自定义渲染，
+当任务有子任务时，折叠该任务会将子任务以办透明状态显示在该任务行上。我们在定制的过程中，
+编写了特定的css样式，和折叠状态下子任务元素尺寸和位置的计算规则。
+
+你可以通过点击First Task的popover面板中的最右侧的Fold/Unfold按键查看效果。
+
+<iframe height="530" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Rendering Custom Task Bars" src="https://codepen.io/Kickoff/embed/ZEprGpB?height=530&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/ZEprGpB'>Kickoff Tutorial - Rendering Custom Task Bars</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+Kickoff中还有很多自定义渲染函数，可以查看
+<%= link_to 'Kickoff', find_route_uri('api_kickoff') %> API 了解更多内容。

@@ -1,0 +1,41 @@
+.kickoff
+  position: relative
+  height: 100%
+  line-height: 24px
+  color: $kickoff-color
+  font-family: Roboto, "Helvetica Neue", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif
+  text-rendering: optimizeLegibility
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+.kickoff,
+[class *= kickoff-]
+  box-sizing: border-box
+  padding: 0
+  margin: 0
+  background-repeat: no-repeat
+
+[class *= kickoff-]
+  color: inherit
+  font-family: inherit
+
+[class *= kickoff-]::before,
+[class *= kickoff-]::after
+  box-sizing: border-box
+  vertical-align: inherit
+  color: inherit
+  text-decoration: inherit
+
+[class*=kickoff][readonly]
+  pointer-events: auto
+  opacity: 1
+
+[class *= kickoff-][disabled]
+  cursor: not-allowed
+  opacity: $kickoff-disabled-opacity
+
+.kickoff-main
+  height: 100%
+  border: solid 1px $kickoff-border-color
+  overflow: auto
+  background: $kickoff-background

@@ -1,0 +1,25 @@
+.kickoff-header
+  display: flex
+  // position: relative
+  position: sticky
+  top: 0
+  left: 0
+  z-index: 3
+  justify-content: space-between
+  height: $kickoff-header-height
+  padding: $kickoff-header-padding
+  background: $kickoff-header-background
+  box-shadow: 0 1px $kickoff-border-color, $kickoff-header-box-shadow
+
+.kickoff-header-actions,
+.kickoff-header-navigations
+  display: flex
+
+.kickoff-header-actions > *
+  margin: $kickoff-header-actions-margin
+
+.kickoff-header-navigations > *
+  margin: $kickoff-header-navigations-margin
+
+.kickoff-header-navigations > *:last-child
+  margin-right: 0

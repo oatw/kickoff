@@ -1,0 +1,21 @@
+var fallbackUrl = "<%= url_for('/unsupported_browser.html') %>"
+
+function isSpecificBrowser (name) {
+  try {
+    return navigator.userAgent.toLowerCase().indexOf(name) > -1
+  } catch (err) {
+    return false
+  }
+}
+
+function isChrome () {
+  return isSpecificBrowser('chrome')
+}
+
+function isFirefox () {
+  return isSpecificBrowser('firefox')
+}
+
+if (!(isChrome() || isFirefox())) {
+  location.href = fallbackUrl
+}

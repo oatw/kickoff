@@ -1,0 +1,17 @@
+.kickoff-gantt
+  display: flex
+  position: relative
+  flex-direction: column
+  flex-wrap: wrap
+  min-height: calc(100% - 48px)
+  // overflow: auto
+
+.kickoff.view-switch-to-table .kickoff-gantt
+  position: fixed
+  z-index: -1
+  pointer-events: none
+  visibility: hidden
+
+.kickoff-gantt > *
+  flex-grow: 0
+  flex-shrink: 0

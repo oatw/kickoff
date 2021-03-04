@@ -1,0 +1,54 @@
+.kickoff-table
+  white-space: nowrap
+  text-align: left
+  // overflow: auto
+
+.kickoff:not(.view-switch-to-table) .kickoff-table
+  display: none
+
+.kickoff-table table
+  border-collapse: collapse
+  min-width: 100%
+  background: $kickoff-table-background
+
+.kickoff-table th,
+.kickoff-table td
+  padding: $kickoff-table-cell-padding
+
+.kickoff-table th::first-letter,
+.kickoff-table td::first-letter
+  text-transform: capitalize
+
+.kickoff-table-header
+  font-size: $kickoff-table-header-font-size
+  line-height: $kickoff-table-header-line-height
+  font-weight: 700
+  text-transform: capitalize
+
+.kickoff-table-header th
+  position: sticky
+  top: 0
+  z-index: 1
+  background: $kickoff-table-background
+  box-shadow: 0 1px 0 $kickoff-border-color
+
+.kickoff-header ~ .kickoff-table .kickoff-table-header th
+  top: $kickoff-header-height
+
+.kickoff-table-task
+  font-size: $kickoff-table-task-font-size
+  line-height: $kickoff-table-task-line-height
+  box-shadow: 0 1px 0 $kickoff-border-color
+
+.kickoff-table-task.is-hidden
+  display: none
+
+.kickoff-table-task td[data-prop = actions] > [class *= kickoff-button-]
+  margin: $kickoff-table-task-actions-button-margin
+
+.kickoff-table-task.is-picked
+  background: $kickoff-table-task-picked-background
+
+.kickoff-table-task.is-folded,
+.kickoff-table-task.is-picked.is-folded
+  background: $kickoff-table-folded-task-background
