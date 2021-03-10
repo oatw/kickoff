@@ -1,4 +1,4 @@
-/*! Kickoff 0.2.4 | https://github.com/oatw/kickoff | MIT license */
+/*! Kickoff 0.2.5 | https://github.com/oatw/kickoff | MIT license */
 (function (factory) {
   typeof define === 'function' && define.amd ? define(factory) :
   factory();
@@ -851,7 +851,7 @@
             this.data.excludeWeekends = true;
           }
           (base1 = this.data).inclusions || (base1.inclusions = []);
-          (base2 = this.data).minDurationSeconds || (base2.minDurationSeconds = 3600 * 24);
+          (base2 = this.data).minDurationSeconds || (base2.minDurationSeconds = 3600 * 24 - 1);
           (base3 = this.data).maxHistorySize || (base3.maxHistorySize = 2e308);
           (base4 = this.data).actions || (base4.actions = rootTaskActions.slice());
           this.actions(...this.data.actions);
@@ -1219,8 +1219,19 @@
 
   luda.component('kickoffButtonCreateMilestone').protect(modelable.all()).protect(localeable.all()).protect({
     create: function() {
+      var beginning, end, m, unit;
+      if (!this.model().isRoot()) {
+        return this.model().create({
+          type: 'milestone'
+        });
+      }
+      unit = this.timeline().unit();
+      m = Time.methodNames(unit);
+      beginning = end = new Time()[m.endOfUnit]();
       return this.model().create({
-        type: 'milestone'
+        type: 'milestone',
+        beginning,
+        end
       });
     }
   }).help({
@@ -2352,10 +2363,16 @@
   }).protect({
     inputCls: 'kickoff-form-time-input',
     errorMarkerCls: 'kickoff-form-time-selected-label',
+    pickTheEndOfTheDay: function() {
+      if ('pickEnd' in this.fieldConfig) {
+        return this.fieldConfig.pickEnd;
+      }
+      return this.fieldConfig.prop === 'end';
+    },
     inputTemplate: function() {
       var placeholder;
       placeholder = this.fieldConfig.placeholder || '';
-      return `<div class='kickoff-form-time-simulated'> <input class='kickoff-form-time-selected-label' readonly placeholder='${placeholder}' data-auto='false'/> <div class='kickoff-form-time-dropdown is-hidden'> <div class='kickoff-form-time-dropdown-header'> <button class='kickoff-button-form-time-ctrl-prev-month'> <i class='kickoff-ico-left'></i> </button> <label class='kickoff-form-time-header-label'></label> <button class='kickoff-button-form-time-ctrl-next-month'> <i class='kickoff-ico-right'></i> </button> </div> <table class='kickoff-form-time-month'> <thead><tr> <th>Sun</th><th>Mon</th><th>Thu</th> <th>Wes</th><th>Thr</th><th>Fri</th><th>Sat</th> </tr></thead> <tbody class='kickoff-form-time-month-dates'></tbody> </table> </div> </div>`;
+      return `<div class='kickoff-form-time-simulated'> <input class='kickoff-form-time-selected-label' readonly placeholder='${placeholder}' data-auto='false'/> <div class='kickoff-form-time-dropdown is-hidden'> <div class='kickoff-form-time-dropdown-header'> <button class='kickoff-button-form-time-ctrl-prev-month'> <i class='kickoff-ico-left'></i> </button> <label class='kickoff-form-time-header-label'></label> <button class='kickoff-button-form-time-ctrl-next-month'> <i class='kickoff-ico-right'></i> </button> </div> <table class='kickoff-form-time-month'> <thead><tr> <th>${this.l('timePicker.whatDay.sun')}</th> <th>${this.l('timePicker.whatDay.mon')}</th> <th>${this.l('timePicker.whatDay.thu')}</th> <th>${this.l('timePicker.whatDay.wes')}</th> <th>${this.l('timePicker.whatDay.thr')}</th> <th>${this.l('timePicker.whatDay.fri')}</th> <th>${this.l('timePicker.whatDay.sat')}</th> </tr></thead> <tbody class='kickoff-form-time-month-dates'></tbody> </table> </div> </div>`;
     },
     renderMonth: function(time) {
       clearTimeout(this._isRenderingMonth);
@@ -2375,18 +2392,23 @@
           monthDates.push(null);
         }
         [datesHtml = '', monthLabel = time.toString('{yyyy}/{mm}')];
-        monthDates.forEach(function(date, index) {
-          var checked, checkedAttr, label, value;
+        monthDates.forEach((date, index) => {
+          var checked, checkedAttr, dateTime, label, value;
           if (index % 7 === 0) {
             datesHtml += '<tr>';
           }
           datesHtml += '<td>';
           if (date) {
-            value = date.beginning.toString();
-            label = date.beginning.toString('{yyyy}/{mm}/{dd}');
-            checked = selected.beginningOfTheDay().equals(date.beginning);
+            dateTime = this.pickTheEndOfTheDay() ? date.end : date.beginning;
+            value = dateTime.toString();
+            label = dateTime.toString('{yyyy}/{mm}/{dd}');
+            if (this.pickTheEndOfTheDay()) {
+              checked = selected.endOfTheDay().equals(dateTime);
+            } else {
+              checked = selected.beginningOfTheDay().equals(dateTime);
+            }
             checkedAttr = checked ? 'checked' : '';
-            datesHtml += `<label class='kickoff-form-time-date' data-auto='false'> <input class='kickoff-form-time-input' ${checkedAttr} name='kickoff_task_${model.uid}_${prop}' type='radio' value='${value}' data-auto='false' data-prop='${prop}' data-label='${label}' /> <span class='kickoff-form-time-input-label'> ${date.beginning.toString('{dd}')} </span> </label>`;
+            datesHtml += `<label class='kickoff-form-time-date' data-auto='false'> <input class='kickoff-form-time-input' ${checkedAttr} name='kickoff_task_${model.uid}_${prop}' type='radio' value='${value}' data-auto='false' data-prop='${prop}' data-label='${label}' /> <span class='kickoff-form-time-input-label'> ${dateTime.toString('{dd}')} </span> </label>`;
           }
           datesHtml += '</td>';
           if (index % 7 === 6) {
@@ -6411,11 +6433,17 @@
       });
     },
     left: function(pos) {
+      var accurateTime;
       if (pos != null) {
         if (this.model().isMilestone()) {
           pos += this.root.height() / 2;
         }
-        this.model().beginning(this.pxToTime(pos));
+        accurateTime = this.pxToTime(pos);
+        if (this.config().enableGanttAccurateTimeOperations) {
+          this.model().beginning(accurateTime);
+        } else {
+          this.model().beginning(this.nearestUnitEdgeTime(accurateTime, 'beginning'));
+        }
         return this.render();
       } else {
         pos = this.timeToPx(this.model().beginning());
@@ -6426,11 +6454,17 @@
       }
     },
     right: function(pos) {
+      var accurateTime;
       if (pos != null) {
         if (this.model().isMilestone()) {
           pos -= this.root.height() / 2;
         }
-        this.model().end(this.pxToTime(pos));
+        accurateTime = this.pxToTime(pos);
+        if (this.config().enableGanttAccurateTimeOperations) {
+          this.model().end(accurateTime);
+        } else {
+          this.model().end(this.nearestUnitEdgeTime(accurateTime, 'end'));
+        }
         return this.render();
       } else {
         pos = this.timeToPx(this.model().end());
@@ -6441,13 +6475,49 @@
       }
     },
     move: function(pos) {
+      var accurateBeginning, accurateEnd, accurateSecs, beginningDiffSecs, currentBeginning, currentEnd, edgeSecs, endDiffSecs, nearestUnitBeginning, nearestUnitEnd;
       if (!pos) {
         return;
       }
-      this.model().travel(parseInt(pos / this.pxPerSec(), 10));
+      accurateSecs = parseInt(pos / this.pxPerSec(), 10);
+      if (this.config().enableGanttAccurateTimeOperations) {
+        this.model().travel(accurateSecs);
+      } else {
+        [currentBeginning, currentEnd] = [this.model().beginning(), this.model().end()];
+        accurateBeginning = currentBeginning.calcSeconds(accurateSecs);
+        accurateEnd = currentEnd.calcSeconds(accurateSecs);
+        nearestUnitBeginning = this.nearestUnitEdgeTime(accurateBeginning, 'beginning');
+        nearestUnitEnd = this.nearestUnitEdgeTime(accurateEnd, 'end');
+        beginningDiffSecs = nearestUnitBeginning.since(currentBeginning).seconds;
+        endDiffSecs = nearestUnitEnd.since(currentEnd).seconds;
+        if (Math.abs(beginningDiffSecs) < Math.abs(endDiffSecs)) {
+          edgeSecs = beginningDiffSecs;
+        } else {
+          edgeSecs = endDiffSecs;
+        }
+        this.model().travel(edgeSecs);
+      }
       return this.render();
     }
   }).protect({
+    nearestUnitEdgeTime: function(time, prefer = 'beginning') {
+      var m, next, nextDiff, prev, prevDiff;
+      m = Time.methodNames(this.timeline().unit());
+      if (prefer === 'end') {
+        next = time[m.endOfUnit]();
+        prev = next[m.prevUnit]()[m.endOfUnit]();
+      } else {
+        prev = time[m.beginningOfUnit]();
+        next = prev[m.nextUnit]()[m.beginningOfUnit]();
+      }
+      prevDiff = time.since(prev).seconds;
+      nextDiff = next.since(time).seconds;
+      if (prevDiff < nextDiff) {
+        return prev;
+      } else {
+        return next;
+      }
+    },
     pxPerSec: function() {
       return this.root.width() / this.timeline().duration().seconds;
     },
@@ -8408,7 +8478,7 @@
         exclusions: [],
         excludeWeekends: true,
         inclusions: [],
-        minDurationSeconds: 3600 * 24,
+        minDurationSeconds: 3600 * 24 - 1,
         maxHistorySize: 2e308,
         actions: ['createTask', 'createMilestone', 'destroyDescendants', 'switchState']
       };
@@ -8439,6 +8509,7 @@
         renderHeaderActionCreateMilestone: null,
         renderHeaderActionDestroyDescendants: null,
         renderHeaderActionSwitchState: null,
+        enableGanttAccurateTimeOperations: false,
         renderGantt: true,
         renderGanttTaskGraph: null,
         renderGanttTaskSummary: null,
@@ -8692,6 +8763,17 @@
               week: 'weeks',
               day: 'days',
               hour: 'hours'
+            }
+          },
+          timePicker: {
+            whatDay: {
+              sun: 'Sun',
+              mon: 'Mon',
+              thu: 'Thu',
+              wes: 'Wes',
+              thr: 'Thr',
+              fri: 'Fri',
+              sat: 'Sat'
             }
           }
         }
