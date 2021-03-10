@@ -2,6 +2,7 @@ import modelable from '../../mixins/modelable.coffee'
 import {capitalize} from '../../utilities/string.coffee'
 import {taskActions} from '../../models/task/task.coffee'
 import localeable from '../../mixins/localeable.coffee'
+import Time from '../../models/time/index.coffee'
 
 
 
@@ -31,7 +32,11 @@ luda.component 'kickoffGanttTask'
   left: (pos) ->
     if pos?
       pos += @root.height() / 2 if @model().isMilestone()
-      @model().beginning @pxToTime(pos)
+      accurateTime = @pxToTime pos
+      if @config().enableGanttAccurateTimeOperations
+        @model().beginning accurateTime
+      else
+        @model().beginning @nearestUnitEdgeTime(accurateTime, 'beginning')
       @render()
     else
       pos = @timeToPx @model().beginning()
@@ -41,7 +46,11 @@ luda.component 'kickoffGanttTask'
   right: (pos) ->
     if pos?
       pos -= @root.height() / 2 if @model().isMilestone()
-      @model().end @pxToTime(pos)
+      accurateTime = @pxToTime pos
+      if @config().enableGanttAccurateTimeOperations
+        @model().end accurateTime
+      else
+        @model().end @nearestUnitEdgeTime(accurateTime, 'end')
       @render()
     else
       pos = @timeToPx @model().end()
@@ -50,10 +59,37 @@ luda.component 'kickoffGanttTask'
 
   move: (pos) ->
     return unless pos
-    @model().travel parseInt(pos / @pxPerSec(), 10)
+    accurateSecs = parseInt(pos / @pxPerSec(), 10)
+    if @config().enableGanttAccurateTimeOperations
+      @model().travel accurateSecs
+    else
+      [currentBeginning, currentEnd] = [@model().beginning(), @model().end()]
+      accurateBeginning = currentBeginning.calcSeconds accurateSecs
+      accurateEnd = currentEnd.calcSeconds accurateSecs
+      nearestUnitBeginning = @nearestUnitEdgeTime accurateBeginning, 'beginning'
+      nearestUnitEnd = @nearestUnitEdgeTime accurateEnd, 'end'
+      beginningDiffSecs = nearestUnitBeginning.since(currentBeginning).seconds
+      endDiffSecs = nearestUnitEnd.since(currentEnd).seconds
+      if Math.abs(beginningDiffSecs) < Math.abs(endDiffSecs)
+        edgeSecs = beginningDiffSecs
+      else
+        edgeSecs = endDiffSecs
+      @model().travel edgeSecs
     @render()
 
 .protect
+
+  nearestUnitEdgeTime: (time, prefer = 'beginning') ->
+    m = Time.methodNames @timeline().unit()
+    if prefer is 'end'
+      next = time[m.endOfUnit]()
+      prev = next[m.prevUnit]()[m.endOfUnit]()
+    else
+      prev = time[m.beginningOfUnit]()
+      next = prev[m.nextUnit]()[m.beginningOfUnit]()
+    prevDiff = time.since(prev).seconds
+    nextDiff = next.since(time).seconds
+    if prevDiff < nextDiff then prev else next
 
   pxPerSec: ->
     @root.width() / @timeline().duration().seconds

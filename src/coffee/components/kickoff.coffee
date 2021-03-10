@@ -106,6 +106,7 @@ class Kickoff
       renderHeaderActionCreateMilestone: null
       renderHeaderActionDestroyDescendants: null
       renderHeaderActionSwitchState: null
+      enableGanttAccurateTimeOperations: false
       renderGantt: true
       renderGanttTaskGraph: null
       renderGanttTaskSummary: null
