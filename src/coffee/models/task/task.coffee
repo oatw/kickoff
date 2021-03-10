@@ -177,7 +177,7 @@ class Task
       @data.exclusions ||= []
       @data.excludeWeekends = true unless 'excludeWeekends' of data
       @data.inclusions ||= []
-      @data.minDurationSeconds ||= 3600 * 24
+      @data.minDurationSeconds ||= 3600 * 24 - 1
       @data.maxHistorySize ||= Infinity
       @data.actions ||= rootTaskActions.slice()
       @actions @data.actions...

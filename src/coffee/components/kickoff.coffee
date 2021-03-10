@@ -77,7 +77,7 @@ class Kickoff
       exclusions: []
       excludeWeekends: true
       inclusions: []
-      minDurationSeconds: 3600 * 24
+      minDurationSeconds: 3600 * 24 - 1
       maxHistorySize: Infinity
       actions: [
         'createTask', 'createMilestone', 'destroyDescendants', 'switchState'
