@@ -47,8 +47,13 @@ luda.component 'kickoffFormTime'
         </div>
         <table class='kickoff-form-time-month'>
           <thead><tr>
-            <th>Sun</th><th>Mon</th><th>Thu</th>
-            <th>Wes</th><th>Thr</th><th>Fri</th><th>Sat</th>
+            <th>#{@l 'timePicker.whatDay.sun'}</th>
+            <th>#{@l 'timePicker.whatDay.mon'}</th>
+            <th>#{@l 'timePicker.whatDay.thu'}</th>
+            <th>#{@l 'timePicker.whatDay.wes'}</th>
+            <th>#{@l 'timePicker.whatDay.thr'}</th>
+            <th>#{@l 'timePicker.whatDay.fri'}</th>
+            <th>#{@l 'timePicker.whatDay.sat'}</th>
           </tr></thead>
           <tbody class='kickoff-form-time-month-dates'></tbody>
         </table>

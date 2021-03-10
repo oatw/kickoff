@@ -279,6 +279,15 @@ class Kickoff
             week: 'weeks'
             day: 'days'
             hour: 'hours'
+        timePicker:
+          whatDay:
+            sun: 'Sun'
+            mon: 'Mon'
+            thu: 'Thu'
+            wes: 'Wes'
+            thr: 'Thr'
+            fri: 'Fri'
+            sat: 'Sat'
     modelConfKeys = Object.keys(
       @_taskConf()
     ).concat(
