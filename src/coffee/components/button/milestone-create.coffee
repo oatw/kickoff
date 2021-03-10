@@ -12,7 +12,12 @@ luda.component 'kickoffButtonCreateMilestone'
 
 .protect
 
-  create: -> @model().create({type: 'milestone'})
+  create: ->
+    return @model().create({type: 'milestone'}) unless @model().isRoot()
+    unit = @timeline().unit()
+    m = Time.methodNames unit
+    beginning = end = new Time()[m.endOfUnit]()
+    @model().create({type: 'milestone', beginning, end})
 
 .help
 
