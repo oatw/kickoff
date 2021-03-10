@@ -30,6 +30,10 @@ luda.component 'kickoffFormTime'
 
   errorMarkerCls: 'kickoff-form-time-selected-label'
 
+  pickTheEndOfTheDay: ->
+    return @fieldConfig.pickEnd if 'pickEnd' of @fieldConfig
+    @fieldConfig.prop is 'end'
+
   inputTemplate: ->
     placeholder = @fieldConfig.placeholder or ''
     "<div class='kickoff-form-time-simulated'>
@@ -73,13 +77,17 @@ luda.component 'kickoffFormTime'
       monthDates.unshift null while (firstDateWeekday -= 1) >= 0
       monthDates.push null while (lastDateWeekday += 1) <= 6
       [datesHtml = '', monthLabel = time.toString('{yyyy}/{mm}')]
-      monthDates.forEach (date, index) ->
+      monthDates.forEach (date, index) =>
         datesHtml += '<tr>' if index % 7 is 0
         datesHtml += '<td>'
         if date
-          value = date.beginning.toString()
-          label = date.beginning.toString '{yyyy}/{mm}/{dd}'
-          checked = selected.beginningOfTheDay().equals date.beginning
+          dateTime = if @pickTheEndOfTheDay() then date.end else date.beginning
+          value = dateTime.toString()
+          label = dateTime.toString '{yyyy}/{mm}/{dd}'
+          if @pickTheEndOfTheDay()
+            checked = selected.endOfTheDay().equals dateTime
+          else
+            checked = selected.beginningOfTheDay().equals dateTime
           checkedAttr = if checked then 'checked' else ''
           datesHtml += "<label class='kickoff-form-time-date' data-auto='false'>
             <input class='kickoff-form-time-input' #{checkedAttr}
@@ -87,7 +95,7 @@ luda.component 'kickoffFormTime'
             value='#{value}' data-auto='false' data-prop='#{prop}'
             data-label='#{label}' />
             <span class='kickoff-form-time-input-label'>
-              #{date.beginning.toString '{dd}'}
+              #{dateTime.toString '{dd}'}
             </span>
           </label>"
         datesHtml += '</td>'
