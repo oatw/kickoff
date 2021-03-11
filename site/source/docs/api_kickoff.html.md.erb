@@ -50,6 +50,8 @@ dom节点$container
 组件header导航按键自定义渲染函数，传入两个参数，根任务实例rootTask和用于挂载渲染内容的头部dom
 节点$container
 
+@prop {boolean} [enableGanttAccurateTimeOperations = false] - 是否启用gantt视图精确
+拖拽模式，启用时，gantt视图中对任务和里程碑的拖拽不会自动吸附到时间线纵轴单元上
 @prop {boolean} [renderGantt = true] - 是否渲染组件gantt视图
 @prop {Function} [renderGanttTaskGraph = null] - 0.2.0新增
 gantt视图中任务图形的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容的
@@ -153,7 +155,7 @@ table视图中里程碑destroy动作按键的自定义渲染函数，传入两�
 {prop: 'wbs', type: 'text', placeholder: 'E.g., 1.1', render: null},
 {prop: 'name', type: 'text', placeholder: 'E.g., A New Task', render: null},
 {prop: 'beginning', type: 'time', placeholder: 'E.g., 2020/01/01', render: null},
-{prop: 'end', type: 'time', placeholder: 'E.g., 2020/01/02', render: null},
+{prop: 'end', type: 'time', pickEnd: true, placeholder: 'E.g., 2020/01/02', render: null},
 {prop: 'predecessors', render: null, fields:[
   {prop: 'predecessors.startToStart', type: 'select', multiple: true,
    options: [], placeholder: 'E.g., 1, 2', render: null},
@@ -247,6 +249,17 @@ task: {
     week: 'weeks',
     day: 'days',
     hour: 'hours'
+  }
+},
+timePicker: {
+  whatDay: {
+    sun: 'Sun',
+    mon: 'Mon',
+    thu: 'Thu',
+    wes: 'Wes',
+    thr: 'Thr',
+    fri: 'Fri',
+    sat: 'Sat'
   }
 }
 }] - 0.2.0新增 本地化语言设置，支持扩展自定义字段。$可以用于嵌套字段中来标识本级locale设置。
