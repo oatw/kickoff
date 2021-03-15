@@ -1,4 +1,4 @@
-/*! Kickoff 0.2.5 | https://github.com/oatw/kickoff | MIT license */
+/*! Kickoff 0.2.6 | https://github.com/oatw/kickoff | MIT license */
 (function (factory) {
   typeof define === 'function' && define.amd ? define(factory) :
   factory();
@@ -818,7 +818,7 @@
   Task = (function() {
     class Task {
       constructor(data = {}, options = {}) {
-        var base, base1, base10, base11, base12, base2, base3, base4, base5, base6, base7, base8, base9, beginning, earlistEnd, end, isMilestone, isTopLevel, key, operations, p, readonlys, rollbackIndex, rootId, taskWbs, val;
+        var base, base1, base10, base11, base12, base13, base14, base15, base16, base2, base3, base4, base5, base6, base7, base8, base9, beginning, earlistEnd, end, isMilestone, isTopLevel, key, operations, p, readonlys, rollbackIndex, rootId, taskWbs, val;
         if (options.source === 'history') {
           for (key in data) {
             val = data[key];
@@ -853,7 +853,11 @@
           (base1 = this.data).inclusions || (base1.inclusions = []);
           (base2 = this.data).minDurationSeconds || (base2.minDurationSeconds = 3600 * 24 - 1);
           (base3 = this.data).maxHistorySize || (base3.maxHistorySize = 2e308);
-          (base4 = this.data).actions || (base4.actions = rootTaskActions.slice());
+          (base4 = this.data).finishToStartCompensatorySeconds || (base4.finishToStartCompensatorySeconds = 0);
+          (base5 = this.data).startToFinishCompensatorySeconds || (base5.startToFinishCompensatorySeconds = 0);
+          (base6 = this.data).startToStartCompensatorySeconds || (base6.startToStartCompensatorySeconds = 0);
+          (base7 = this.data).finishToFinishCompensatorySeconds || (base7.finishToFinishCompensatorySeconds = 0);
+          (base8 = this.data).actions || (base8.actions = rootTaskActions.slice());
           this.actions(...this.data.actions);
         } else {
           rootId = this.rootId = this.data.rootId;
@@ -874,22 +878,22 @@
           if (!isMilestone) {
             this.data.type = 'task';
           }
-          (base5 = this.data).name || (base5.name = `New ${capitalize(this.data.type)}`);
+          (base9 = this.data).name || (base9.name = `New ${capitalize(this.data.type)}`);
           if (this.data.end instanceof Time) {
             this.data.end = this.data.end.toString();
           } else {
-            (base6 = this.data).end || (base6.end = '');
+            (base10 = this.data).end || (base10.end = '');
           }
           if (this.data.beginning instanceof Time) {
             this.data.beginning = this.data.beginning.toString();
           } else {
-            (base7 = this.data).beginning || (base7.beginning = '');
+            (base11 = this.data).beginning || (base11.beginning = '');
           }
-          (base8 = this.data).dependencies || (base8.dependencies = {});
-          (base9 = this.data.dependencies).finishToStart || (base9.finishToStart = '');
-          (base10 = this.data.dependencies).startToStart || (base10.startToStart = '');
-          (base11 = this.data.dependencies).finishToFinish || (base11.finishToFinish = '');
-          (base12 = this.data.dependencies).startToFinish || (base12.startToFinish = '');
+          (base12 = this.data).dependencies || (base12.dependencies = {});
+          (base13 = this.data.dependencies).finishToStart || (base13.finishToStart = '');
+          (base14 = this.data.dependencies).startToStart || (base14.startToStart = '');
+          (base15 = this.data.dependencies).finishToFinish || (base15.finishToFinish = '');
+          (base16 = this.data.dependencies).startToFinish || (base16.startToFinish = '');
           this.depended = {
             finishToStart: '',
             startToStart: '',
@@ -3688,7 +3692,7 @@
     return depdType(this, depd);
   };
 
-  var addUniqueResource, beforeUpdateSchedule, checkEarlistTaskEnd, checkEarlistTreeBegin, checkEarlistTreeEnd, collectResources, collectTreeDownTravelResources, collectTreeLeafBackwardBeginResources, collectTreeLeafBackwardEndResources, collectTreeLeafForwardBeginResources, collectTreeLeafForwardEndResources, createF2FDepdEntries, createF2SDepdEntries, createS2FDepdEntries, createS2SDepdEntries, descResources, earlistTaskEnd, hasNoTaskChildren, mergeOriginal, propagateResources, taskBeginByEndDiff, taskEndByBeginDiff, touchSchedule, tryUpdateSchedule;
+  var addUniqueResource, beforeUpdateSchedule, checkEarlistTaskEnd, checkEarlistTreeBegin, checkEarlistTreeEnd, collectResources, collectTreeDownTravelResources, collectTreeLeafBackwardBeginResources, collectTreeLeafBackwardEndResources, collectTreeLeafForwardBeginResources, collectTreeLeafForwardEndResources, createF2FDepdEntries, createF2SDepdEntries, createS2FDepdEntries, createS2SDepdEntries, descResources, earlistTaskEnd, hasNoTaskChildren, limitionWithCompensatory, mergeOriginal, propagateResources, taskBeginByEndDiff, taskEndByBeginDiff, touchSchedule, tryUpdateSchedule;
 
   earlistTaskEnd = function(task, newBegin) {
     var minDuration;
@@ -3854,9 +3858,9 @@
         leafResource.end = newBegin;
       }
       leafResources.push(leafResource);
-      depdEntries = depdEntries.concat(createS2SDepdEntries(leaf, newBegin, belongsToTask, 'flex'), createS2FDepdEntries(leaf, newBegin, belongsToTask, 'flex'), createS2SDepdEntries(leaf, newBegin, notBelongsToTask), createS2FDepdEntries(leaf, newBegin, notBelongsToTask));
+      depdEntries = depdEntries.concat(createS2SDepdEntries(leaf, newBegin, belongsToTask, 'flex'), createS2FDepdEntries(leaf, newBegin, belongsToTask, 'flex'), createS2SDepdEntries(leaf, limitionWithCompensatory(leaf, 'startToStart', newBegin), notBelongsToTask), createS2FDepdEntries(leaf, limitionWithCompensatory(leaf, 'startToFinish', newBegin), notBelongsToTask));
       if (leafResource.end) {
-        return depdEntries = depdEntries.concat(createF2FDepdEntries(leaf, leafResource.end, belongsToTask, 'flex'), createF2SDepdEntries(leaf, leafResource.end, belongsToTask, 'flex'), createF2FDepdEntries(leaf, leafResource.end, notBelongsToTask), createF2SDepdEntries(leaf, leafResource.end, notBelongsToTask));
+        return depdEntries = depdEntries.concat(createF2FDepdEntries(leaf, leafResource.end, belongsToTask, 'flex'), createF2SDepdEntries(leaf, leafResource.end, belongsToTask, 'flex'), createF2FDepdEntries(leaf, limitionWithCompensatory(leaf, 'finishToFinish', leafResource.end), notBelongsToTask), createF2SDepdEntries(leaf, limitionWithCompensatory(leaf, 'finishToStart', leafResource.end), notBelongsToTask));
       }
     });
     return {
@@ -3890,15 +3894,31 @@
       }
       leafResources.push(leafResource);
       if (leafResource.beginning) {
-        depdEntries = depdEntries.concat(createS2SDepdEntries(leaf, leafResource.beginning, belongsToTask, 'flex'), createS2FDepdEntries(leaf, leafResource.beginning, belongsToTask, 'flex'), createS2SDepdEntries(leaf, leafResource.beginning, notBelongsToTask), createS2FDepdEntries(leaf, leafResource.beginning, notBelongsToTask));
+        depdEntries = depdEntries.concat(createS2SDepdEntries(leaf, leafResource.beginning, belongsToTask, 'flex'), createS2FDepdEntries(leaf, leafResource.beginning, belongsToTask, 'flex'), createS2SDepdEntries(leaf, limitionWithCompensatory(leaf, 'startToStart', leafResource.beginning), notBelongsToTask), createS2FDepdEntries(leaf, limitionWithCompensatory(leaf, 'startToFinish', leafResource.beginning), notBelongsToTask));
       }
-      return depdEntries = depdEntries.concat(createF2FDepdEntries(leaf, newEnd, belongsToTask, 'flex'), createF2SDepdEntries(leaf, newEnd, belongsToTask, 'flex'), createF2FDepdEntries(leaf, newEnd, notBelongsToTask), createF2SDepdEntries(leaf, newEnd, notBelongsToTask));
+      return depdEntries = depdEntries.concat(createF2FDepdEntries(leaf, newEnd, belongsToTask, 'flex'), createF2SDepdEntries(leaf, newEnd, belongsToTask, 'flex'), createF2FDepdEntries(leaf, limitionWithCompensatory(leaf, 'finishToFinish', newEnd), notBelongsToTask), createF2SDepdEntries(leaf, limitionWithCompensatory(leaf, 'finishToStart', newEnd), notBelongsToTask));
     });
     return {
       depdEntries,
       leafs: leafsWithSameEnd.concat(task),
       leafResources
     };
+  };
+
+  limitionWithCompensatory = function(depc, type, time) {
+    var compensatorySecs, limitionWithoutCompensatory;
+    compensatorySecs = root(depc).data[`${type}CompensatorySeconds`] || 0;
+    if (type === 'finishToStart' || type === 'finishToFinish') {
+      limitionWithoutCompensatory = time || depc.data.end;
+    } else if (type === 'startToStart' || type === 'startToFinish') {
+      limitionWithoutCompensatory = time || depc.data.beginning;
+    } else {
+      throw new Error("Unsupported dependency type.");
+    }
+    if (!compensatorySecs) {
+      return limitionWithoutCompensatory;
+    }
+    return new Time(limitionWithoutCompensatory).calcSeconds(compensatorySecs);
   };
 
   checkEarlistTreeBegin = function(task, newBegin, mode = 'flex') {
@@ -3919,12 +3939,12 @@
       ref = f2sDeps(n, notBelongsToTask);
       for (i = 0, len = ref.length; i < len; i++) {
         d = ref[i];
-        f2sDepcEnds.push(d.data.end);
+        f2sDepcEnds.push(limitionWithCompensatory(d, 'finishToStart'));
       }
       ref1 = s2sDeps(n, notBelongsToTask);
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         d = ref1[j];
-        s2sDepcBegins.push(d.data.beginning);
+        s2sDepcBegins.push(limitionWithCompensatory(d, 'startToStart'));
       }
       if (!isMilestone(n)) {
         return;
@@ -3932,13 +3952,13 @@
       ref2 = f2fDeps(n, notBelongsToTask);
       for (k = 0, len2 = ref2.length; k < len2; k++) {
         d = ref2[k];
-        f2fDepcEnds.push(d.data.end);
+        f2fDepcEnds.push(limitionWithCompensatory(d, 'finishToFinish'));
       }
       ref3 = s2fDeps(n, notBelongsToTask);
       results = [];
       for (l = 0, len3 = ref3.length; l < len3; l++) {
         d = ref3[l];
-        results.push(s2fDepcBegins.push(d.data.beginning));
+        results.push(s2fDepcBegins.push(limitionWithCompensatory(d, 'startToFinish')));
       }
       return results;
     });
@@ -3977,12 +3997,12 @@
       ref = s2fDeps(n, notBelongsToTask);
       for (i = 0, len = ref.length; i < len; i++) {
         d = ref[i];
-        s2fDepcBegins.push(d.data.beginning);
+        s2fDepcBegins.push(limitionWithCompensatory(d, 'startToFinish'));
       }
       ref1 = f2fDeps(n, notBelongsToTask);
       for (j = 0, len1 = ref1.length; j < len1; j++) {
         d = ref1[j];
-        f2fDepcEnds.push(d.data.end);
+        f2fDepcEnds.push(limitionWithCompensatory(d, 'finishToFinish'));
       }
       if (!isMilestone(n)) {
         return;
@@ -3990,13 +4010,13 @@
       ref2 = s2sDeps(n, notBelongsToTask);
       for (k = 0, len2 = ref2.length; k < len2; k++) {
         d = ref2[k];
-        s2sDepcBegins.push(d.data.beginning);
+        s2sDepcBegins.push(limitionWithCompensatory(d, 'startToStart'));
       }
       ref3 = f2sDeps(n, notBelongsToTask);
       results = [];
       for (l = 0, len3 = ref3.length; l < len3; l++) {
         d = ref3[l];
-        results.push(f2sDepcEnds.push(d.data.end));
+        results.push(f2sDepcEnds.push(limitionWithCompensatory(d, 'finishToStart')));
       }
       return results;
     });
@@ -4088,10 +4108,10 @@
         end: instanceNewEnd
       });
       if (instanceNewBegin.laterThan(instanceOldBegin)) {
-        depdEntries = depdEntries.concat(createS2SDepdEntries(instance, instanceNewBegin, notBelongsToTask), createS2FDepdEntries(instance, instanceNewBegin, notBelongsToTask));
+        depdEntries = depdEntries.concat(createS2SDepdEntries(instance, limitionWithCompensatory(instance, 'startToStart', instanceNewBegin), notBelongsToTask), createS2FDepdEntries(instance, limitionWithCompensatory(instance, 'startToFinish', instanceNewBegin), notBelongsToTask));
       }
       if (instanceNewEnd.laterThan(instanceOldEnd)) {
-        return depdEntries = depdEntries.concat(createF2FDepdEntries(instance, instanceNewEnd, notBelongsToTask), createF2SDepdEntries(instance, instanceNewEnd, notBelongsToTask));
+        return depdEntries = depdEntries.concat(createF2FDepdEntries(instance, limitionWithCompensatory(instance, 'finishToFinish', instanceNewEnd), notBelongsToTask), createF2SDepdEntries(instance, limitionWithCompensatory(instance, 'finishToStart', instanceNewEnd), notBelongsToTask));
       }
     });
     return {depdEntries, resources};
@@ -4197,10 +4217,10 @@
         }
         addUniqueResource(resources, ancestorResource);
         if (correctBegin.laterThan(ancestor.data.beginning)) {
-          depdEntries = depdEntries.concat(createS2SDepdEntries(ancestor, correctBegin), createS2FDepdEntries(ancestor, correctBegin));
+          depdEntries = depdEntries.concat(createS2SDepdEntries(ancestor, limitionWithCompensatory(ancestor, 'startToStart', correctBegin)), createS2FDepdEntries(ancestor, limitionWithCompensatory(ancestor, 'startToFinish', correctBegin)));
         }
         if (correctEnd.laterThan(ancestor.data.end)) {
-          depdEntries = depdEntries.concat(createF2FDepdEntries(ancestor, correctEnd), createF2SDepdEntries(ancestor, correctEnd));
+          depdEntries = depdEntries.concat(createF2FDepdEntries(ancestor, limitionWithCompensatory(ancestor, 'finishToFinish', correctEnd)), createF2SDepdEntries(ancestor, limitionWithCompensatory(ancestor, 'finishToStart', correctEnd)));
         }
         return false;
       });
@@ -8480,7 +8500,11 @@
         inclusions: [],
         minDurationSeconds: 3600 * 24 - 1,
         maxHistorySize: 2e308,
-        actions: ['createTask', 'createMilestone', 'destroyDescendants', 'switchState']
+        actions: ['createTask', 'createMilestone', 'destroyDescendants', 'switchState'],
+        finishToStartCompensatorySeconds: 0,
+        startToFinishCompensatorySeconds: 0,
+        startToStartCompensatorySeconds: 0,
+        finishToFinishCompensatorySeconds: 0
       };
       this._mergeConf(config, conf);
       return config;
@@ -8509,7 +8533,7 @@
         renderHeaderActionCreateMilestone: null,
         renderHeaderActionDestroyDescendants: null,
         renderHeaderActionSwitchState: null,
-        enableGanttAccurateTimeOperations: false,
+        enableGanttAccurateTimeOperations: true,
         renderGantt: true,
         renderGanttTaskGraph: null,
         renderGanttTaskSummary: null,
