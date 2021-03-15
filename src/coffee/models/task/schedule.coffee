@@ -121,14 +121,22 @@ collectTreeLeafForwardBeginResources = (task, newBegin) ->
     depdEntries = depdEntries.concat(
       createS2SDepdEntries(leaf, newBegin, belongsToTask, 'flex'),
       createS2FDepdEntries(leaf, newBegin, belongsToTask, 'flex'),
-      createS2SDepdEntries(leaf, newBegin, notBelongsToTask),
-      createS2FDepdEntries(leaf, newBegin, notBelongsToTask)
+      createS2SDepdEntries(leaf, limitionWithCompensatory(
+        leaf, 'startToStart', newBegin
+      ), notBelongsToTask),
+      createS2FDepdEntries(leaf, limitionWithCompensatory(
+        leaf, 'startToFinish', newBegin
+      ), notBelongsToTask)
     )
     depdEntries = depdEntries.concat(
       createF2FDepdEntries(leaf, leafResource.end, belongsToTask, 'flex'),
       createF2SDepdEntries(leaf, leafResource.end, belongsToTask, 'flex'),
-      createF2FDepdEntries(leaf, leafResource.end, notBelongsToTask),
-      createF2SDepdEntries(leaf, leafResource.end, notBelongsToTask)
+      createF2FDepdEntries(leaf, limitionWithCompensatory(
+        leaf, 'finishToFinish', leafResource.end
+      ), notBelongsToTask),
+      createF2SDepdEntries(leaf, limitionWithCompensatory(
+        leaf, 'finishToStart', leafResource.end
+      ), notBelongsToTask)
     ) if leafResource.end
   {depdEntries, leafs: leafsWithEarlierBegin.concat(task), leafResources}
 
@@ -146,16 +154,35 @@ collectTreeLeafForwardEndResources = (task, newEnd) ->
     depdEntries = depdEntries.concat(
       createS2SDepdEntries(leaf, leafResource.beginning, belongsToTask, 'flex'),
       createS2FDepdEntries(leaf, leafResource.beginning, belongsToTask, 'flex'),
-      createS2SDepdEntries(leaf, leafResource.beginning, notBelongsToTask),
-      createS2FDepdEntries(leaf, leafResource.beginning, notBelongsToTask)
+      createS2SDepdEntries(leaf, limitionWithCompensatory(
+        leaf, 'startToStart', leafResource.beginning
+      ), notBelongsToTask),
+      createS2FDepdEntries(leaf, limitionWithCompensatory(
+        leaf, 'startToFinish', leafResource.beginning
+      ), notBelongsToTask)
     ) if leafResource.beginning
     depdEntries = depdEntries.concat(
       createF2FDepdEntries(leaf, newEnd, belongsToTask, 'flex'),
       createF2SDepdEntries(leaf, newEnd, belongsToTask, 'flex'),
-      createF2FDepdEntries(leaf, newEnd, notBelongsToTask),
-      createF2SDepdEntries(leaf, newEnd, notBelongsToTask)
+      createF2FDepdEntries(leaf, limitionWithCompensatory(
+        leaf, 'finishToFinish', newEnd
+      ), notBelongsToTask),
+      createF2SDepdEntries(leaf, limitionWithCompensatory(
+        leaf, 'finishToStart', newEnd
+      ), notBelongsToTask)
     )
   {depdEntries, leafs: leafsWithSameEnd.concat(task), leafResources}
+
+limitionWithCompensatory = (depc, type, time) ->
+  compensatorySecs = root(depc).data["#{type}CompensatorySeconds"] or 0
+  if type in ['finishToStart', 'finishToFinish']
+    limitionWithoutCompensatory = time or depc.data.end
+  else if type in ['startToStart', 'startToFinish']
+    limitionWithoutCompensatory = time or depc.data.beginning
+  else
+    throw new Error "Unsupported dependency type."
+  return limitionWithoutCompensatory unless compensatorySecs
+  new Time(limitionWithoutCompensatory).calcSeconds(compensatorySecs)
 
 checkEarlistTreeBegin = (task, newBegin, mode = 'flex') ->
   [earlist, ok] = [null, true]
@@ -166,11 +193,15 @@ checkEarlistTreeBegin = (task, newBegin, mode = 'flex') ->
     new Time(n.data.beginning).laterThan newBegin
   notBelongsToTask = (t) -> not affectedTreeDownNodes.includes t
   affectedTreeDownNodes.concat(task, affectedTreeUpNodes).forEach (n) ->
-    f2sDepcEnds.push d.data.end for d in f2sDeps n, notBelongsToTask
-    s2sDepcBegins.push d.data.beginning for d in s2sDeps n, notBelongsToTask
+    for d in f2sDeps n, notBelongsToTask
+      f2sDepcEnds.push limitionWithCompensatory(d, 'finishToStart')
+    for d in s2sDeps n, notBelongsToTask
+      s2sDepcBegins.push limitionWithCompensatory(d, 'startToStart')
     return unless isMilestone n
-    f2fDepcEnds.push d.data.end for d in f2fDeps n, notBelongsToTask
-    s2fDepcBegins.push d.data.beginning for d in s2fDeps n, notBelongsToTask
+    for d in f2fDeps n, notBelongsToTask
+      f2fDepcEnds.push limitionWithCompensatory(d, 'finishToFinish')
+    for d in s2fDeps n, notBelongsToTask
+      s2fDepcBegins.push limitionWithCompensatory(d, 'startToFinish')
   limitions = [].concat f2sDepcEnds, s2sDepcBegins, f2fDepcEnds, s2fDepcBegins
   return {earlist, ok} unless limitions.length
   earlist = Time.latest limitions...
@@ -191,11 +222,15 @@ checkEarlistTreeEnd = (task, newEnd, mode = 'flex') ->
   affectedTreeDownNodes.concat(task, affectedTreeUpNodes).forEach (n) ->
     if mode is 'flex' and isTask n
       earlistTaskEnds.push earlistTaskEnd(n, n.data.beginning)
-    s2fDepcBegins.push d.data.beginning for d in s2fDeps n, notBelongsToTask
-    f2fDepcEnds.push d.data.end for d in f2fDeps n, notBelongsToTask
+    for d in s2fDeps n, notBelongsToTask
+      s2fDepcBegins.push limitionWithCompensatory(d, 'startToFinish')
+    for d in f2fDeps n, notBelongsToTask
+      f2fDepcEnds.push limitionWithCompensatory(d, 'finishToFinish')
     return unless isMilestone n
-    s2sDepcBegins.push d.data.beginning for d in s2sDeps n, notBelongsToTask
-    f2sDepcEnds.push d.data.end for d in f2sDeps n, notBelongsToTask
+    for d in s2sDeps n, notBelongsToTask
+      s2sDepcBegins.push limitionWithCompensatory(d, 'startToStart')
+    for d in f2sDeps n, notBelongsToTask
+      f2sDepcEnds.push limitionWithCompensatory(d, 'finishToStart')
   limitions = [].concat(
     f2fDepcEnds, s2fDepcBegins, earlistTaskEnds, f2sDepcEnds, s2sDepcBegins
   )
@@ -244,12 +279,20 @@ collectTreeDownTravelResources = (task, newBegin, newEnd) ->
       task: instance, beginning: instanceNewBegin, end: instanceNewEnd
     }
     depdEntries = depdEntries.concat(
-      createS2SDepdEntries(instance, instanceNewBegin, notBelongsToTask),
-      createS2FDepdEntries(instance, instanceNewBegin, notBelongsToTask)
+      createS2SDepdEntries(instance, limitionWithCompensatory(
+        instance, 'startToStart', instanceNewBegin
+      ), notBelongsToTask),
+      createS2FDepdEntries(instance, limitionWithCompensatory(
+        instance, 'startToFinish', instanceNewBegin
+      ), notBelongsToTask)
     ) if instanceNewBegin.laterThan instanceOldBegin
     depdEntries = depdEntries.concat(
-      createF2FDepdEntries(instance, instanceNewEnd, notBelongsToTask),
-      createF2SDepdEntries(instance, instanceNewEnd, notBelongsToTask)
+      createF2FDepdEntries(instance, limitionWithCompensatory(
+        instance, 'finishToFinish', instanceNewEnd
+      ), notBelongsToTask),
+      createF2SDepdEntries(instance, limitionWithCompensatory(
+        instance, 'finishToStart', instanceNewEnd
+      ), notBelongsToTask)
     ) if instanceNewEnd.laterThan instanceOldEnd
   {depdEntries, resources}
 
@@ -310,12 +353,20 @@ propagateResources = (resources = [], targets = [], childFilter, mode) ->
         ancestorResource.dependencies = dependencies if depsChanged
       addUniqueResource resources, ancestorResource
       depdEntries = depdEntries.concat(
-        createS2SDepdEntries(ancestor, correctBegin),
-        createS2FDepdEntries(ancestor, correctBegin)
+        createS2SDepdEntries(ancestor, limitionWithCompensatory(
+          ancestor, 'startToStart', correctBegin
+        )),
+        createS2FDepdEntries(ancestor, limitionWithCompensatory(
+          ancestor, 'startToFinish', correctBegin
+        ))
       ) if correctBegin.laterThan ancestor.data.beginning
       depdEntries = depdEntries.concat(
-        createF2FDepdEntries(ancestor, correctEnd),
-        createF2SDepdEntries(ancestor, correctEnd)
+        createF2FDepdEntries(ancestor, limitionWithCompensatory(
+          ancestor, 'finishToFinish', correctEnd
+        )),
+        createF2SDepdEntries(ancestor, limitionWithCompensatory(
+          ancestor, 'finishToStart', correctEnd
+        ))
       ) if correctEnd.laterThan ancestor.data.end
       false
   {depdEntries}

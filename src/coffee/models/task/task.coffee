@@ -179,6 +179,10 @@ class Task
       @data.inclusions ||= []
       @data.minDurationSeconds ||= 3600 * 24 - 1
       @data.maxHistorySize ||= Infinity
+      @data.finishToStartCompensatorySeconds ||= 0
+      @data.startToFinishCompensatorySeconds ||= 0
+      @data.startToStartCompensatorySeconds ||= 0
+      @data.finishToFinishCompensatorySeconds ||= 0
       @data.actions ||= rootTaskActions.slice()
       @actions @data.actions...
     else

@@ -17,6 +17,14 @@
 @prop {integer} [maxHistorySize = Infinity] -0.2.0新增 redo栈/undo栈最大元素数量
 @prop {Array} [actions = ['createTask', 'createMilestone', 'destroyDescendants',
 'switchState']] - 0.2.0新增 可执行动作
+@prop {integer} [finishToStartCompensatorySeconds = 0] - 0.2.6新增 前置任务结束时间
+与后置任务开始时间的补偿差秒数
+@prop {integer} [startToFinishCompensatorySeconds = 0] - 0.2.6新增 前置任务开始时间
+与后置任务结束时间的补偿差秒数
+@prop {integer} [startToStartCompensatorySeconds = 0] - 0.2.6新增 前置任务开始时间
+与后置任务开始时间的补偿差秒数
+@prop {integer} [finishToFinishCompensatorySeconds = 0] - 0.2.6新增 前置任务结束时间
+与后之任务结束时间的补偿差秒数
 ```
 
 ```plaintext

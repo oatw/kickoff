@@ -20,6 +20,15 @@
 @prop {TimelineFlag[]} [flags = []] - 0.2.0新增 时间线重要时间标记
 @prop {integer} [minDurationSeconds = 3600 * 24] - 任务最短周期秒数
 
+@prop {integer} [finishToStartCompensatorySeconds = 0] - 0.2.6新增 前置任务结束时间
+与后置任务开始时间的补偿差秒数
+@prop {integer} [startToFinishCompensatorySeconds = 0] - 0.2.6新增 前置任务开始时间
+与后置任务结束时间的补偿差秒数
+@prop {integer} [startToStartCompensatorySeconds = 0] - 0.2.6新增 前置任务开始时间
+与后置任务开始时间的补偿差秒数
+@prop {integer} [finishToFinishCompensatorySeconds = 0] - 0.2.6新增 前置任务结束时间
+与后之任务结束时间的补偿差秒数
+
 @prop {integer} [timelinePadding = 4] - 时间线两侧padding单位长度
 @prop {integer} [timelineLeastRange = 13] - 时间线最小单位长度
 
@@ -50,8 +59,8 @@ dom节点$container
 组件header导航按键自定义渲染函数，传入两个参数，根任务实例rootTask和用于挂载渲染内容的头部dom
 节点$container
 
-@prop {boolean} [enableGanttAccurateTimeOperations = false] - 是否启用gantt视图精确
-拖拽模式，启用时，gantt视图中对任务和里程碑的拖拽不会自动吸附到时间线纵轴单元上
+@prop {boolean} [enableGanttAccurateTimeOperations = true] - 0.2.5新增 是否启用
+gantt视图精确拖拽模式，启用时，gantt视图中对任务和里程碑的拖拽不会自动吸附到时间线纵轴单元上
 @prop {boolean} [renderGantt = true] - 是否渲染组件gantt视图
 @prop {Function} [renderGanttTaskGraph = null] - 0.2.0新增
 gantt视图中任务图形的自定义渲染函数，传入两个参数，当前任务实例task和用于挂载渲染内容的

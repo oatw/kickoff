@@ -53,6 +53,9 @@ menu:
   -
     label: 多语言
     uri: /docs/tutorial_locale.html
+  -
+    label: 自动吸附
+    uri: /docs/tutorial_auto_adsorption.html
 -
   title: API
   items:

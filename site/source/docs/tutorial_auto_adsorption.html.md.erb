@@ -1,0 +1,20 @@
+<!-- markdownlint-disable -->
+# Gantt视图自动吸附
+
+默认状态下，Kickoff的gantt视图使用高精度拖拽模式，不会自动吸附当前的时间单元。
+如需启用自动吸附可设置`enableGanttAccurateTimeOperations`为`false`, 这样一来，每次执行
+gantt视图的拖拽操作都可以使当前任务的开始和结束时间自动吸附在距离最近的时间线单元纵轴上。
+
+另外，如果需要对任务依赖的开始和结束时间作出补偿计算，可以设置`finishToStartCompensatorySeconds`、
+`startToFinishCompensatorySeconds`、`startToStartCompensatorySeconds`、
+`finishToFinishCompensatorySeconds` 四个配置项，当任务的开始或结束时间更新时，
+会以其前置任务的约束时间加上对应的补偿差时间综合计算当前任务新的开始或结束时间。
+一般来说，这四个配置项在任务的开始和结束时间必须严格匹配某时间单位的开始和结束时使用。
+
+根据以上内容，我们来实现一个可自动吸附时间单元纵轴，
+并且每个任务的开始和结束时间都严格匹配当前时间单位开始和结束时间的gantt视图。
+
+<iframe height="600" style="width: 100%;" scrolling="no" title="Kickoff Tutorial - Auto Adsorption &amp; Dependency Compensatory" src="https://codepen.io/Kickoff/embed/poNYaMK?height=265&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true">
+  See the Pen <a href='https://codepen.io/Kickoff/pen/poNYaMK'>Kickoff Tutorial - Auto Adsorption &amp; Dependency Compensatory</a> by Kickoff
+  (<a href='https://codepen.io/Kickoff'>@Kickoff</a>) on <a href='https://codepen.io'>CodePen</a>.
+</iframe>
