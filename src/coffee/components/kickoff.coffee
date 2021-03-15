@@ -82,6 +82,10 @@ class Kickoff
       actions: [
         'createTask', 'createMilestone', 'destroyDescendants', 'switchState'
       ]
+      finishToStartCompensatorySeconds: 0
+      startToFinishCompensatorySeconds: 0
+      startToStartCompensatorySeconds: 0
+      finishToFinishCompensatorySeconds: 0
     }
     @_mergeConf config, conf
     config
